@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이룸학당 | 초중고 전문 1:1 과외</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;900&family=Pretendard:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101a33;
+    --ink-2:#1b2a4d;
+    --paper:#f5f6f8;
+    --paper-2:#ffffff;
+    --gold:#b8892b;
+    --gold-light:#e8c77a;
+    --slate:#5b6472;
+    --slate-2:#8b93a1;
+    --line:#dde1e8;
+    --line-dark:#2a3a63;
+    --danger:#b3492f;
+    --radius:2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Pretendard', -apple-system, sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Noto Serif KR', serif; font-weight:700; letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  :focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(245,246,248,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    height:76px;
+  }
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Noto Serif KR', serif; font-weight:700; font-size:19px; color:var(--ink);}
+  .logo-mark{
+    width:34px; height:34px; border-radius:50%;
+    background:var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gold-light); font-size:14px; font-weight:700;
+    font-family:'Noto Serif KR', serif;
+  }
+  .nav-links{display:flex; gap:36px; font-size:14.5px; font-weight:500; color:var(--slate);}
+  .nav-links a{position:relative; padding:6px 0;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
+    background:var(--gold); transition:width .25s ease;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--ink); color:#fff; font-size:13.5px; font-weight:600;
+    padding:11px 22px; border:none; letter-spacing:0.02em;
+  }
+  .nav-cta:hover{background:var(--ink-2);}
+  .burger{display:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--ink);
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 600px 400px at 88% 15%, rgba(184,137,43,0.16), transparent 60%),
+      linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.15) 100%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:60px;
+    padding:96px 0 84px; align-items:center; position:relative; z-index:1;
+  }
+  .hero-eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:600; color:var(--gold-light);
+    letter-spacing:0.08em; margin-bottom:22px;
+  }
+  .hero-eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--gold-light);}
+  .hero h1{
+    font-size:52px; line-height:1.28; color:#fff; margin-bottom:22px;
+  }
+  .hero h1 em{font-style:normal; color:var(--gold-light);}
+  .hero p{
+    font-size:16.5px; color:#c4cadb; max-width:480px; margin-bottom:34px;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--gold); color:var(--ink); font-weight:700; font-size:14.5px;
+    padding:15px 28px; border:none; letter-spacing:0.01em;
+  }
+  .btn-primary:hover{background:var(--gold-light);}
+  .btn-ghost{
+    background:transparent; color:#fff; font-weight:600; font-size:14.5px;
+    padding:15px 26px; border:1px solid rgba(255,255,255,0.35);
+  }
+  .btn-ghost:hover{border-color:#fff;}
+
+  .dday-card{
+    background:var(--ink-2);
+    border:1px solid var(--line-dark);
+    padding:34px 30px;
+    position:relative;
+  }
+  .dday-card::before{
+    content:''; position:absolute; top:0; left:0; width:100%; height:3px;
+    background:linear-gradient(90deg, var(--gold), transparent);
+  }
+  .dday-label{font-size:12.5px; color:var(--slate-2); letter-spacing:0.06em; margin-bottom:6px;}
+  .dday-title{font-size:15px; color:#e7e9ee; font-weight:600; margin-bottom:22px;}
+  .dday-number{font-size:64px; font-weight:700; color:var(--gold-light); line-height:1; margin-bottom:8px;}
+  .dday-sub{font-size:12.5px; color:var(--slate-2);}
+  .dday-divider{height:1px; background:var(--line-dark); margin:24px 0;}
+  .dday-stats{display:flex; justify-content:space-between; font-size:12.5px; color:#c4cadb;}
+  .dday-stats b{display:block; font-size:18px; color:#fff; font-weight:700; margin-bottom:3px;}
+
+  /* ---------- Section shared ---------- */
+  section{padding:96px 0;}
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .eyebrow-line{
+    display:flex; align-items:center; gap:10px; margin-bottom:16px;
+  }
+  .eyebrow-line .bar{width:24px; height:2px; background:var(--gold);}
+  .eyebrow-line span{font-size:13px; font-weight:700; color:var(--gold); letter-spacing:0.08em;}
+  .section-head h2{font-size:34px; line-height:1.35; color:var(--ink);}
+  .section-head p{font-size:15px; color:var(--slate); margin-top:14px;}
+
+  /* ---------- Roadmap (signature) ---------- */
+  .roadmap{background:var(--paper-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .tabs{display:flex; gap:8px; margin-bottom:48px;}
+  .tab{
+    padding:12px 22px; font-size:14px; font-weight:600; color:var(--slate);
+    background:transparent; border:1px solid var(--line);
+  }
+  .tab.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .tab:hover:not(.active){border-color:var(--ink); color:var(--ink);}
+
+  .road-track{position:relative; padding-top:6px;}
+  .road-line{
+    position:absolute; top:29px; left:0; right:0; height:2px;
+    background:var(--line);
+  }
+  .road-line-fill{
+    position:absolute; top:29px; left:0; height:2px; background:var(--gold);
+    transition:width .4s ease;
+  }
+  .road-nodes{display:grid; grid-template-columns:repeat(6, 1fr); gap:0; position:relative;}
+  .node{cursor:pointer; text-align:center; padding-top:0;}
+  .node-dot{
+    width:14px; height:14px; border-radius:50%; background:#fff; border:2px solid var(--line);
+    margin:0 auto 18px; position:relative; z-index:2; transition:all .2s ease;
+  }
+  .node.current .node-dot{background:var(--gold); border-color:var(--gold); box-shadow:0 0 0 5px rgba(184,137,43,0.15);}
+  .node:hover .node-dot{border-color:var(--ink);}
+  .node-grade{font-size:13px; font-weight:700; color:var(--ink); margin-bottom:4px;}
+  .node-tag{font-size:11.5px; color:var(--slate-2); font-family:'JetBrains Mono', monospace;}
+
+  .road-detail{
+    margin-top:44px; background:var(--paper); border:1px solid var(--line);
+    padding:32px 36px; display:grid; grid-template-columns:180px 1fr; gap:32px; align-items:start;
+  }
+  .road-detail-grade{font-family:'Noto Serif KR', serif; font-size:28px; font-weight:700; color:var(--ink);}
+  .road-detail-grade small{display:block; font-family:'Pretendard'; font-size:12.5px; font-weight:600; color:var(--gold); margin-top:6px; letter-spacing:0.04em;}
+  .road-detail-body h4{font-size:16px; margin-bottom:10px; color:var(--ink);}
+  .road-detail-body p{font-size:14px; color:var(--slate);}
+  .road-detail-body ul{margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;}
+  .road-detail-body li{
+    list-style:none; font-size:12.5px; font-weight:600; color:var(--ink-2);
+    background:#fff; border:1px solid var(--line); padding:6px 12px;
+  }
+
+  /* ---------- Why us ---------- */
+  .why-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .why-card{background:var(--paper-2); padding:36px 28px;}
+  .why-num{font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--gold); font-weight:700; margin-bottom:20px;}
+  .why-card h3{font-size:18px; margin-bottom:12px; color:var(--ink);}
+  .why-card p{font-size:14px; color:var(--slate);}
+
+  /* ---------- Teachers ---------- */
+  .teacher-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
+  .teacher-card{background:var(--paper-2); border:1px solid var(--line); padding:0; overflow:hidden;}
+  .teacher-photo{
+    height:220px; background:linear-gradient(135deg, var(--ink), var(--ink-2));
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .teacher-photo span{
+    font-family:'Noto Serif KR', serif; font-size:44px; color:rgba(232,199,122,0.35); font-weight:700;
+  }
+  .teacher-info{padding:24px 26px;}
+  .teacher-info .subj{font-size:12px; font-weight:700; color:var(--gold); letter-spacing:0.05em; margin-bottom:8px;}
+  .teacher-info h3{font-size:18px; margin-bottom:8px; color:var(--ink);}
+  .teacher-info p{font-size:13.5px; color:var(--slate);}
+  .teacher-tags{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
+  .teacher-tags li{list-style:none; font-size:11.5px; color:var(--slate); background:var(--paper); padding:5px 10px; border:1px solid var(--line);}
+
+  /* ---------- Process ---------- */
+  .process{background:var(--ink); color:#fff;}
+  .process .section-head h2{color:#fff;}
+  .process .section-head p{color:#b7bdcc;}
+  .process-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:0; position:relative;}
+  .process-grid::before{
+    content:''; position:absolute; top:26px; left:5%; right:5%; height:1px; background:var(--line-dark);
+  }
+  .p-step{position:relative; padding-right:24px;}
+  .p-num{
+    width:52px; height:52px; border-radius:50%; background:var(--ink-2); border:1px solid var(--line-dark);
+    display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono', monospace;
+    font-size:16px; color:var(--gold-light); font-weight:700; margin-bottom:24px; position:relative; z-index:1;
+  }
+  .p-step h3{font-size:17px; margin-bottom:10px; color:#fff;}
+  .p-step p{font-size:13.5px; color:#b7bdcc;}
+
+  /* ---------- Stats/reviews ---------- */
+  .stats-band{
+    display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line); margin-bottom:56px;
+  }
+  .stat-cell{padding:32px 28px; border-right:1px solid var(--line); background:var(--paper-2);}
+  .stat-cell:last-child{border-right:none;}
+  .stat-num{font-family:'JetBrains Mono', monospace; font-size:34px; font-weight:700; color:var(--ink);}
+  .stat-num span{color:var(--gold);}
+  .stat-label{font-size:13px; color:var(--slate); margin-top:6px;}
+
+  .review-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .review-card{background:var(--paper-2); border:1px solid var(--line); padding:28px;}
+  .review-stars{color:var(--gold); font-size:14px; margin-bottom:14px; letter-spacing:2px;}
+  .review-card p{font-size:14.5px; color:var(--ink-2); margin-bottom:18px;}
+  .review-meta{font-size:12.5px; color:var(--slate-2); border-top:1px solid var(--line); padding-top:14px;}
+
+  /* ---------- CTA / form ---------- */
+  .cta-section{background:var(--paper-2); border-top:1px solid var(--line);}
+  .cta-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;}
+  .cta-left h2{font-size:32px; margin-bottom:18px; color:var(--ink);}
+  .cta-left p{font-size:15px; color:var(--slate); margin-bottom:28px; max-width:420px;}
+  .cta-info-item{display:flex; gap:14px; margin-bottom:20px; align-items:flex-start;}
+  .cta-info-icon{
+    width:38px; height:38px; background:var(--ink); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; color:var(--gold-light); font-size:15px;
+  }
+  .cta-info-item b{display:block; font-size:14px; color:var(--ink); margin-bottom:2px;}
+  .cta-info-item span{font-size:13px; color:var(--slate);}
+
+  .form-card{background:var(--ink); padding:40px; color:#fff;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-size:12.5px; color:var(--slate-2); margin-bottom:7px; font-weight:600;}
+  .field input, .field select{
+    width:100%; padding:12px 14px; background:var(--ink-2); border:1px solid var(--line-dark);
+    color:#fff; font-size:14px; font-family:inherit;
+  }
+  .field input::placeholder{color:#6d7691;}
+  .field input:focus, .field select:focus{border-color:var(--gold); outline:none;}
+  .form-submit{
+    width:100%; padding:15px; background:var(--gold); color:var(--ink); border:none;
+    font-weight:700; font-size:14.5px; margin-top:8px;
+  }
+  .form-submit:hover{background:var(--gold-light);}
+  .form-note{font-size:11.5px; color:var(--slate-2); margin-top:12px; text-align:center;}
+
+  /* ---------- FAQ ---------- */
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:22px 4px; cursor:pointer; font-size:15.5px; font-weight:600; color:var(--ink);
+  }
+  .faq-q .plus{font-family:'JetBrains Mono', monospace; color:var(--gold); font-size:18px; transition:transform .2s ease;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .3s ease;}
+  .faq-item.open .faq-a{max-height:200px;}
+  .faq-a p{padding:0 4px 22px; font-size:14px; color:var(--slate); max-width:640px;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--ink); color:#9aa1b5; padding:56px 0 28px;}
+  .foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px;}
+  .foot-logo{font-family:'Noto Serif KR', serif; font-size:19px; font-weight:700; color:#fff; margin-bottom:14px;}
+  .foot-grid p{font-size:13px; line-height:1.8;}
+  .foot-col h4{font-size:13px; color:#fff; margin-bottom:16px; font-weight:600;}
+  .foot-col a{display:block; font-size:13px; margin-bottom:10px; color:#9aa1b5;}
+  .foot-col a:hover{color:var(--gold-light);}
+  .foot-bottom{border-top:1px solid var(--line-dark); padding-top:22px; font-size:12px; display:flex; justify-content:space-between;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .hero-grid{grid-template-columns:1fr; padding:56px 0;}
+    .hero h1{font-size:36px;}
+    .why-grid{grid-template-columns:repeat(2,1fr);}
+    .teacher-grid{grid-template-columns:1fr;}
+    .process-grid{grid-template-columns:1fr 1fr; row-gap:36px;}
+    .process-grid::before{display:none;}
+    .stats-band{grid-template-columns:repeat(2,1fr);}
+    .review-grid{grid-template-columns:1fr;}
+    .cta-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr 1fr; row-gap:28px;}
+    .road-nodes{grid-template-columns:repeat(3,1fr); row-gap:28px;}
+    .road-line, .road-line-fill{display:none;}
+    .road-detail{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="logo-mark">이</span>이룸학당</div>
+    <nav class="nav-links">
+      <a href="#roadmap">학년별 과정</a>
+      <a href="#why">이룸의 방식</a>
+      <a href="#teachers">선생님 소개</a>
+      <a href="#process">진행 절차</a>
+      <a href="#reviews">합격 후기</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <button class="nav-cta" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">상담 신청</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="hero-eyebrow"><span class="dot"></span>초1 – 고3, 단 하나의 커리큘럼으로 잇다</div>
+      <h1>성적이 아니라<br><em>학년의 흐름</em>을<br>설계합니다.</h1>
+      <p>한 과목의 성적이 아니라 초등부터 고3까지 이어지는 학습의 궤적을 봅니다. 이룸학당은 학생 한 명의 전 학년 로드맵을 그리고, 그 위에 맞는 선생님을 배치합니다.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">무료 학습 진단 신청</button>
+        <button class="btn-ghost" onclick="document.getElementById('roadmap').scrollIntoView({behavior:'smooth'})">학년별 과정 보기</button>
+      </div>
+    </div>
+    <div class="dday-card">
+      <div class="dday-label mono">2027 SUNEUNG COUNTDOWN</div>
+      <div class="dday-title">대학수학능력시험까지</div>
+      <div class="dday-number mono" id="ddayNumber">D-000</div>
+      <div class="dday-sub" id="ddayDate">계산 중…</div>
+      <div class="dday-divider"></div>
+      <div class="dday-stats">
+        <div><b>1:1</b>전 과목 맞춤</div>
+        <div><b>12년</b>초중고 통합 지도</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="roadmap" id="roadmap">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-line"><span class="bar"></span><span>LEARNING ROADMAP</span></div>
+      <h2>초등부터 고3까지,<br>끊기지 않는 12년의 지도</h2>
+      <p>학년마다 필요한 것이 다릅니다. 지금 우리 아이가 어디에 서 있는지 확인하고, 다음 단계에서 무엇을 준비해야 하는지 살펴보세요.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-group="all">전체 보기</button>
+      <button class="tab" data-group="elem">초등부</button>
+      <button class="tab" data-group="mid">중등부</button>
+      <button class="tab" data-group="high">고등부</button>
+    </div>
+
+    <div class="road-track">
+      <div class="road-line"></div>
+      <div class="road-line-fill" id="roadFill" style="width:0%"></div>
+      <div class="road-nodes" id="roadNodes">
+        <!-- nodes injected by JS -->
+      </div>
+    </div>
+
+    <div class="road-detail" id="roadDetail"></div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-line"><span class="bar"></span><span>OUR APPROACH</span></div>
+      <h2>이룸이 과외를 만드는 방식</h2>
+      <p>좋은 선생님 한 명을 붙이는 것과, 학습 전략을 설계하는 것은 다릅니다.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num mono">01</div>
+        <h3>학습 진단 리포트</h3>
+        <p>수업 전 학생의 개념 결손과 학습 습관을 데이터로 확인하고, 그 결과를 학부모님과 함께 공유합니다.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num mono">02</div>
+        <h3>과목보다 학년 설계</h3>
+        <p>이번 학기 성적만 보지 않습니다. 다음 학년, 다음 학교급까지 이어질 학습 계획을 함께 세웁니다.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num mono">03</div>
+        <h3>담당 선생님 고정 배정</h3>
+        <p>학기 중 선생님이 바뀌지 않도록 관리합니다. 관계가 쌓여야 학습이 쌓입니다.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-num mono">04</div>
+        <h3>월간 학부모 리포트</h3>
+        <p>매달 진도, 성취도, 다음 목표를 정리한 리포트를 전달드립니다. 궁금할 때 묻는 것이 아니라, 먼저 알려드립니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="teachers" style="background:var(--paper-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-line"><span class="bar"></span><span>OUR TEACHERS</span></div>
+      <h2>학년과 과목에 맞는 전문 선생님</h2>
+      <p>모든 선생님은 담당 학교급의 교육과정을 별도로 이수합니다.</p>
+    </div>
+    <div class="teacher-grid">
+      <div class="teacher-card">
+        <div class="teacher-photo"><span>초</span></div>
+        <div class="teacher-info">
+          <div class="subj">초등 전 과목 · 학습습관</div>
+          <h3>김서연 선생님</h3>
+          <p>초등 저학년 학습습관 형성과 국어·수학 기초 개념 지도 전문. 놀이형 학습으로 공부 거부감을 줄입니다.</p>
+          <ul class="teacher-tags"><li>초1-초6</li><li>연산</li><li>독해력</li></ul>
+        </div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-photo"><span>중</span></div>
+        <div class="teacher-info">
+          <div class="subj">중등 수학·영어</div>
+          <h3>박준혁 선생님</h3>
+          <p>내신 등급 관리와 고교 선행의 균형을 맞추는 중등 전문 강사. 자유학기제 이후 성적 급변 구간을 집중 관리합니다.</p>
+          <ul class="teacher-tags"><li>중1-중3</li><li>내신</li><li>수학 선행</li></ul>
+        </div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-photo"><span>고</span></div>
+        <div class="teacher-info">
+          <div class="subj">고등 수학·과탐</div>
+          <h3>이하은 선생님</h3>
+          <p>수능 기출 분석과 등급별 맞춤 문제풀이 전략을 지도하는 고등 전문 강사. 정시·수시 병행 전략도 함께 상담합니다.</p>
+          <ul class="teacher-tags"><li>고1-고3</li><li>수능 대비</li><li>과탐</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-line"><span class="bar"></span><span style="color:var(--gold-light)">HOW IT WORKS</span></div>
+      <h2>상담 신청부터 첫 수업까지</h2>
+      <p>실제 배정과 수업 시작까지 이어지는 4단계 절차입니다.</p>
+    </div>
+    <div class="process-grid">
+      <div class="p-step">
+        <div class="p-num">01</div>
+        <h3>학습 진단 상담</h3>
+        <p>학생의 현재 성취도와 학습 습관, 목표 학교급을 확인합니다.</p>
+      </div>
+      <div class="p-step">
+        <div class="p-num">02</div>
+        <h3>맞춤 선생님 매칭</h3>
+        <p>진단 결과를 바탕으로 학년·과목 전문 선생님을 배정해 드립니다.</p>
+      </div>
+      <div class="p-step">
+        <div class="p-num">03</div>
+        <h3>1:1 맞춤 수업</h3>
+        <p>개인별 진도표에 따라 주 1~3회 수업이 진행됩니다.</p>
+      </div>
+      <div class="p-step">
+        <div class="p-num">04</div>
+        <h3>월간 리포트 & 조정</h3>
+        <p>매달 성취도를 점검하고 다음 학년까지의 계획을 다시 조정합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-line"><span class="bar"></span><span>RESULTS</span></div>
+      <h2>숫자로 보는 이룸학당</h2>
+    </div>
+    <div class="stats-band">
+      <div class="stat-cell"><div class="stat-num mono">2<span>~3</span></div><div class="stat-label">평균 내신 등급 상승 (1년 기준)</div></div>
+      <div class="stat-cell"><div class="stat-num mono">94<span>%</span></div><div class="stat-label">담당 선생님 학기 유지율</div></div>
+      <div class="stat-cell"><div class="stat-num mono">830<span>+</span></div><div class="stat-label">누적 학년 연계 지도 사례</div></div>
+      <div class="stat-cell"><div class="stat-num mono">12<span>년</span></div><div class="stat-label">초중고 통합 지도 이력 관리</div></div>
+    </div>
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p>중2 때부터 봐주신 선생님이 고1 내신까지 그대로 이어져서, 처음부터 설명 안 해도 되는 게 제일 좋았어요.</p>
+        <div class="review-meta">고1 학부모 · 수학 2년차</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p>매달 오는 리포트를 보고 다음 학기에 뭘 준비해야 하는지 미리 알 수 있어서 불안하지 않았습니다.</p>
+        <div class="review-meta">중3 학부모 · 영어 1년차</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p>초등 저학년이라 놀이처럼 접근해주셔서 아이가 공부를 싫어하지 않게 된 게 가장 큰 변화예요.</p>
+        <div class="review-meta">초3 학부모 · 국어·수학</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="apply">
+  <div class="wrap cta-grid">
+    <div class="cta-left">
+      <h2>지금, 무료 학습 진단을<br>신청하세요</h2>
+      <p>상담 신청 후 24시간 이내에 담당 선생님이 직접 연락드립니다. 진단은 무료이며, 강요된 등록 절차가 없습니다.</p>
+      <div class="cta-info-item">
+        <div class="cta-info-icon">☎</div>
+        <div><b>전화 상담</b><span><a href="tel:010-3951-0535" style="color:inherit; text-decoration:underline;">010-3951-0535</a> · 평일 10:00 – 20:00</span></div>
+      </div>
+      <div class="cta-info-item">
+        <div class="cta-info-icon">✉</div>
+        <div><b>온라인 상담</b><span>신청 후 24시간 이내 회신</span></div>
+      </div>
+      <div class="cta-info-item">
+        <div class="cta-info-icon">◈</div>
+        <div><b>진단 비용</b><span>무료 (등록 강요 없음)</span></div>
+      </div>
+    </div>
+    <div class="form-card">
+      <div class="form-row">
+        <div class="field"><label>학생 이름</label><input type="text" placeholder="예: 김민준"></div>
+        <div class="field"><label>학부모 연락처</label><input type="tel" placeholder="010-0000-0000"></div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>학년</label>
+          <select>
+            <option>초등 1~3학년</option>
+            <option>초등 4~6학년</option>
+            <option>중학 1~2학년</option>
+            <option>중학 3학년</option>
+            <option>고등 1~2학년</option>
+            <option>고등 3학년</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>희망 과목</label>
+          <select>
+            <option>국어</option>
+            <option>영어</option>
+            <option>수학</option>
+            <option>과학탐구</option>
+            <option>사회탐구</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>남기실 말씀 (선택)</label><input type="text" placeholder="현재 고민이나 목표를 적어주세요"></div>
+      <button class="form-submit" type="button" onclick="alert('상담 신청이 접수되었습니다. 담당 선생님이 곧 연락드립니다.')">상담 신청하기</button>
+      <div class="form-note">제출하신 정보는 상담 목적으로만 사용되며 안전하게 보호됩니다.</div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--paper-2); border-top:1px solid var(--line);">
+  <div class="wrap" style="max-width:840px; padding:0 32px;">
+    <div class="section-head">
+      <div class="eyebrow-line"><span class="bar"></span><span>FAQ</span></div>
+      <h2>자주 묻는 질문</h2>
+    </div>
+    <div id="faqList">
+      <div class="faq-item open">
+        <div class="faq-q">형제가 학년이 다른데 같이 신청할 수 있나요?<span class="plus">+</span></div>
+        <div class="faq-a"><p>네, 가능합니다. 형제·자매 통합 상담을 통해 학년별로 각각 진단하고, 선생님도 학년에 맞게 별도로 배정해 드립니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">한 선생님이 여러 학년을 봐주실 수도 있나요?<span class="plus">+</span></div>
+        <div class="faq-a"><p>과목 특성과 선생님의 전문 학년에 따라 다릅니다. 상담 시 선생님의 담당 학년 범위를 안내해 드립니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">수업 중간에 선생님을 변경할 수 있나요?<span class="plus">+</span></div>
+        <div class="faq-a"><p>가능합니다. 다만 학습 연속성을 위해 학기 중 변경은 권장하지 않으며, 필요 시 학부모님과 충분히 상담 후 진행합니다.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">진단 결과가 마음에 들지 않으면 등록을 하지 않아도 되나요?</div>
+        <div class="faq-q" style="display:none"></div>
+        <div class="faq-a"><p>네, 진단은 무료이며 등록 의무가 없습니다. 결과만 받아보시고 다음 단계를 결정하셔도 됩니다.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">이룸학당</div>
+        <p>초1부터 고3까지, 한 명의 아이를 12년간 지켜보는<br>1:1 전문 과외 이룸학당입니다.</p>
+      </div>
+      <div class="foot-col">
+        <h4>바로가기</h4>
+        <a href="#roadmap">학년별 과정</a>
+        <a href="#teachers">선생님 소개</a>
+        <a href="#reviews">합격 후기</a>
+      </div>
+      <div class="foot-col">
+        <h4>상담 안내</h4>
+        <a href="#apply">상담 신청</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="foot-col">
+        <h4>고객센터</h4>
+        <a href="tel:010-3951-0535">010-3951-0535</a>
+        <a href="mailto:info@iroom-edu.example">info@iroom-edu.example</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 이룸학당. All rights reserved.</span>
+      <span>서울 · 상담 평일 10:00–20:00</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- D-day: next 수능 (3rd Thursday of November) ---------- */
+(function(){
+  function thirdThursdayOfNovember(year){
+    let d = new Date(year, 10, 1); // Nov 1
+    let count = 0;
+    while(true){
+      if(d.getDay() === 4){ // Thursday
+        count++;
+        if(count === 3) break;
+      }
+      d.setDate(d.getDate() + 1);
+    }
+    return d;
+  }
+  const today = new Date();
+  let target = thirdThursdayOfNovember(today.getFullYear());
+  if(target < today){
+    target = thirdThursdayOfNovember(today.getFullYear() + 1);
+  }
+  const diff = Math.ceil((target - today) / (1000*60*60*24));
+  document.getElementById('ddayNumber').textContent = 'D-' + diff;
+  const y = target.getFullYear();
+  document.getElementById('ddayDate').textContent = y + '학년도 수능 (' + (target.getMonth()+1) + '월 ' + target.getDate() + '일 예정)';
+})();
+
+/* ---------- Roadmap data ---------- */
+const roadmapData = [
+  {grade:'초1–2', tag:'ELEM', group:'elem', title:'학습 습관의 뿌리내리기', desc:'공부를 낯설지 않게 만드는 시기입니다. 읽기·쓰기·연산의 기본기를 놀이처럼 익힙니다.', tags:['한글 완성','기초 연산','바른 자세']},
+  {grade:'초3–6', tag:'ELEM', group:'elem', title:'교과 개념의 첫 확장', desc:'국어·수학의 개념이 본격적으로 확장되는 구간. 중등 수학의 선행보다 결손 방지가 우선입니다.', tags:['개념 이해','독해력','연산 자동화']},
+  {grade:'중1–2', tag:'MID', group:'mid', title:'내신과 자유학기의 균형', desc:'자유학기제 이후 급격히 벌어지는 성취도 격차를 관리하고, 고교 수학의 기초를 다집니다.', tags:['내신 대비','수학 기초','영문법']},
+  {grade:'중3', tag:'MID', group:'mid', current:true, title:'고교 배치의 분기점', desc:'고교 진학과 함께 성적 체계가 바뀌는 시기. 지금 결손을 남기면 고1 첫 학기에 그대로 드러납니다.', tags:['고교 대비','수학 선행','내신 마무리']},
+  {grade:'고1–2', tag:'HIGH', group:'high', title:'수능형 사고로의 전환', desc:'내신 등급과 수능 실력을 함께 챙겨야 하는 구간. 과목별 전략이 본격적으로 갈립니다.', tags:['내신+모의고사','과탐 기초','오답 정리']},
+  {grade:'고3', tag:'HIGH', group:'high', title:'실전 전략과 마무리', desc:'기출 분석과 등급별 맞춤 문제풀이로 실전 감각을 끌어올리는 마지막 구간입니다.', tags:['수능 실전','정시·수시 전략','시간 관리']},
+];
+
+const nodesEl = document.getElementById('roadNodes');
+const detailEl = document.getElementById('roadDetail');
+const fillEl = document.getElementById('roadFill');
+
+function renderNodes(filterGroup){
+  nodesEl.innerHTML = '';
+  const visible = roadmapData.filter(d => filterGroup === 'all' || d.group === filterGroup);
+  visible.forEach((d, i) => {
+    const node = document.createElement('div');
+    node.className = 'node' + (d.current ? ' current' : '');
+    node.innerHTML = '<div class="node-dot"></div><div class="node-grade">' + d.grade + '</div><div class="node-tag mono">' + d.tag + '</div>';
+    node.addEventListener('click', () => showDetail(d));
+    nodesEl.appendChild(node);
+  });
+  const currentIndex = visible.findIndex(d => d.current);
+  const pct = currentIndex >= 0 ? (currentIndex / (visible.length - 1)) * 100 : 30;
+  fillEl.style.width = pct + '%';
+  const initial = visible.find(d => d.current) || visible[0];
+  if(initial) showDetail(initial);
+}
+
+function showDetail(d){
+  detailEl.innerHTML =
+    '<div class="road-detail-grade">' + d.grade + '<small>' + d.title + '</small></div>' +
+    '<div class="road-detail-body"><h4>' + d.title + '</h4><p>' + d.desc + '</p>' +
+    '<ul>' + d.tags.map(t => '<li>' + t + '</li>').join('') + '</ul></div>';
+}
+
+renderNodes('all');
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderNodes(tab.dataset.group);
+  });
+});
+
+/* ---------- FAQ accordion ---------- */
+document.querySelectorAll('.faq-q').forEach(q => {
+  if(!q.parentElement.classList.contains('faq-item')) return;
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+</script>
+
+</body>
+</html>
