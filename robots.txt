@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shcool123.co.kr/sitemap.xml
