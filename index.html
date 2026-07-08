@@ -2,7 +2,10 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#101a33">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
 <title>성적오름 | 초중고 전문 1:1 과외</title>
 <meta name="google-site-verification" content="92kW6fQVBpzJ2Tnb884NnFICMreMnrWnfsDb_1tEt70" />
 <meta name="naver-site-verification" content="5a9187c79149c6b9465edd072b58620bc0fbcbfe" />
@@ -84,7 +87,37 @@
     padding:11px 22px; border:none; letter-spacing:0.02em;
   }
   .nav-cta:hover{background:var(--ink-2);}
-  .burger{display:none;}
+  .nav-right{display:flex; align-items:center; gap:14px;}
+  .burger{
+    display:none; width:38px; height:38px; padding:0; border:none; background:transparent;
+    flex-direction:column; align-items:center; justify-content:center; gap:5px; flex-shrink:0;
+  }
+  .burger span{display:block; width:22px; height:2px; background:var(--ink); transition:transform .2s ease, opacity .2s ease;}
+  .burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .burger.active span:nth-child(2){opacity:0;}
+  .burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .mobile-nav{
+    display:none; flex-direction:column; background:var(--paper-2);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .mobile-nav.open{display:flex;}
+  .mobile-nav a{padding:17px 32px; font-size:15px; font-weight:600; color:var(--ink); border-bottom:1px solid var(--line);}
+  .mobile-nav a:last-child{border-bottom:none;}
+
+  /* ---------- Mobile sticky CTA bar ---------- */
+  .mobile-cta-bar{
+    display:none; position:fixed; left:0; right:0; bottom:0; z-index:200;
+    background:var(--paper-2); border-top:1px solid var(--line);
+    box-shadow:0 -6px 18px rgba(16,26,51,0.1);
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    gap:10px;
+  }
+  .mobile-cta-bar a, .mobile-cta-bar button{
+    flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+    height:48px; font-size:14.5px; font-weight:700; border:none;
+  }
+  .mobile-cta-call{background:var(--ink); color:#fff;}
+  .mobile-cta-apply{background:var(--gold); color:var(--ink);}
 
   /* ---------- Hero ---------- */
   .hero{
@@ -315,21 +348,44 @@
 
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
+    body{padding-bottom:70px;}
     .nav-links{display:none;}
-    .hero-grid{grid-template-columns:1fr; padding:56px 0;}
-    .hero h1{font-size:36px;}
+    .burger{display:flex;}
+    .mobile-cta-bar{display:flex;}
+    section{padding:64px 0;}
+    .section-head{margin-bottom:36px;}
+    .hero-grid{grid-template-columns:1fr; padding:40px 0 48px; gap:36px;}
+    .hero h1{font-size:34px;}
+    .hero p{font-size:15.5px;}
     .why-grid{grid-template-columns:repeat(2,1fr);}
     .teacher-grid{grid-template-columns:1fr;}
     .process-grid{grid-template-columns:1fr 1fr; row-gap:36px;}
     .process-grid::before{display:none;}
     .stats-band{grid-template-columns:repeat(2,1fr);}
     .review-grid{grid-template-columns:1fr;}
-    .cta-grid{grid-template-columns:1fr;}
+    .cta-grid{grid-template-columns:1fr; gap:36px;}
+    .form-card{padding:28px 22px;}
     .form-row{grid-template-columns:1fr;}
     .foot-grid{grid-template-columns:1fr 1fr; row-gap:28px;}
     .road-nodes{grid-template-columns:repeat(3,1fr); row-gap:28px;}
     .road-line, .road-line-fill{display:none;}
-    .road-detail{grid-template-columns:1fr;}
+    .road-detail{grid-template-columns:1fr; padding:26px 22px;}
+  }
+
+  @media (max-width:480px){
+    .wrap{padding:0 20px;}
+    .nav{height:64px;}
+    section{padding:48px 0;}
+    .hero h1{font-size:28px;}
+    .section-head h2{font-size:26px;}
+    .dday-card{padding:26px 22px;}
+    .dday-number{font-size:48px;}
+    .why-grid{grid-template-columns:1fr;}
+    .stats-band{grid-template-columns:1fr 1fr;}
+    .stat-cell{padding:22px 18px;}
+    .stat-num{font-size:28px;}
+    .foot-grid{grid-template-columns:1fr;}
+    .foot-bottom{flex-direction:column; gap:6px; align-items:flex-start;}
   }
 </style>
 </head>
@@ -346,9 +402,27 @@
       <a href="#reviews">합격 후기</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <button class="nav-cta" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">상담 신청</button>
+    <div class="nav-right">
+      <button class="nav-cta" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">상담 신청</button>
+      <button class="burger" id="burgerBtn" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#roadmap">학년별 과정</a>
+    <a href="#why">성적오름의 방식</a>
+    <a href="#teachers">선생님 소개</a>
+    <a href="#process">진행 절차</a>
+    <a href="#reviews">합격 후기</a>
+    <a href="#faq">FAQ</a>
+  </nav>
 </header>
+
+<div class="mobile-cta-bar">
+  <a class="mobile-cta-call" href="tel:010-3951-0535">☎ 전화 상담</a>
+  <button class="mobile-cta-apply" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">무료 진단 신청</button>
+</div>
 
 <section class="hero">
   <div class="wrap hero-grid">
@@ -722,6 +796,24 @@ document.querySelectorAll('.tab').forEach(tab => {
     renderNodes(tab.dataset.group);
   });
 });
+
+/* ---------- Mobile nav toggle ---------- */
+(function(){
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  burgerBtn.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('open');
+    burgerBtn.classList.toggle('active', isOpen);
+    burgerBtn.setAttribute('aria-expanded', isOpen);
+  });
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      burgerBtn.classList.remove('active');
+      burgerBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
 
 /* ---------- FAQ accordion ---------- */
 document.querySelectorAll('.faq-q').forEach(q => {
