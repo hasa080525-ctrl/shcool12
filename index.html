@@ -251,8 +251,12 @@
     display:flex; align-items:center; justify-content:center;
     position:relative;
   }
-  .teacher-photo span{
-    font-family:'Noto Serif KR', serif; font-size:44px; color:rgba(232,199,122,0.35); font-weight:700;
+  .avatar-icon{width:64px; height:64px; color:rgba(232,199,122,0.35);}
+  .teacher-badge{
+    position:absolute; bottom:14px; right:14px; width:32px; height:32px; border-radius:50%;
+    background:var(--ink); border:2px solid var(--gold-light); color:var(--gold-light);
+    font-family:'Noto Serif KR', serif; font-weight:700; font-size:13px;
+    display:flex; align-items:center; justify-content:center;
   }
   .teacher-info{padding:24px 26px;}
   .teacher-info .subj{font-size:12px; font-weight:700; color:var(--gold); letter-spacing:0.05em; margin-bottom:8px;}
@@ -517,7 +521,10 @@
     </div>
     <div class="teacher-grid">
       <div class="teacher-card">
-        <div class="teacher-photo"><span>초</span></div>
+        <div class="teacher-photo">
+          <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
+          <span class="teacher-badge">초</span>
+        </div>
         <div class="teacher-info">
           <div class="subj">초등 전 과목 · 학습습관</div>
           <h3>김서연 선생님</h3>
@@ -526,7 +533,10 @@
         </div>
       </div>
       <div class="teacher-card">
-        <div class="teacher-photo"><span>중</span></div>
+        <div class="teacher-photo">
+          <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
+          <span class="teacher-badge">중</span>
+        </div>
         <div class="teacher-info">
           <div class="subj">중등 수학·영어</div>
           <h3>박준혁 선생님</h3>
@@ -535,12 +545,75 @@
         </div>
       </div>
       <div class="teacher-card">
-        <div class="teacher-photo"><span>고</span></div>
+        <div class="teacher-photo">
+          <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
+          <span class="teacher-badge">고</span>
+        </div>
         <div class="teacher-info">
           <div class="subj">고등 수학·과탐</div>
           <h3>이하은 선생님</h3>
           <p>수능 기출 분석과 등급별 맞춤 문제풀이 전략을 지도하는 고등 전문 강사. 정시·수시 병행 전략도 함께 상담합니다.</p>
           <ul class="teacher-tags"><li>고1-고3</li><li>수능 대비</li><li>과탐</li></ul>
+        </div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-photo">
+          <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
+          <span class="teacher-badge">국</span>
+        </div>
+        <div class="teacher-info">
+          <div class="subj">국어 전 과정 · 독해력·문학</div>
+          <h3>조은서 선생님</h3>
+          <p>지문 구조 분석과 문학 감상법을 함께 지도하는 국어 전문 강사. 비문학 독해 전략으로 등급을 끌어올립니다.</p>
+          <ul class="teacher-tags"><li>독해력</li><li>문학</li><li>비문학</li></ul>
+        </div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-photo">
+          <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
+          <span class="teacher-badge">영</span>
+        </div>
+        <div class="teacher-info">
+          <div class="subj">영어 전 과정 · 문법·회화</div>
+          <h3>한지민 선생님</h3>
+          <p>문법 체계화와 실전 독해를 병행 지도하는 영어 전문 강사. 내신 서술형부터 수능 독해까지 폭넓게 다룹니다.</p>
+          <ul class="teacher-tags"><li>문법</li><li>독해</li><li>서술형</li></ul>
+        </div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-photo">
+          <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
+          <span class="teacher-badge">수</span>
+        </div>
+        <div class="teacher-info">
+          <div class="subj">수학 전 과정 · 개념·연산</div>
+          <h3>윤성민 선생님</h3>
+          <p>개념 이해부터 심화 문제풀이까지 단계별로 지도하는 수학 전문 강사. 오답노트 기반 반복 학습을 중요시합니다.</p>
+          <ul class="teacher-tags"><li>개념</li><li>심화</li><li>오답노트</li></ul>
+        </div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-photo">
+          <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
+          <span class="teacher-badge">과</span>
+        </div>
+        <div class="teacher-info">
+          <div class="subj">과탐 · 물리·화학·생명과학</div>
+          <h3>오세훈 선생님</h3>
+          <p>물리·화학·생명과학 개념을 실험과 연결해 설명하는 과탐 전문 강사. 단원별 기출 분석으로 등급 전략을 세웁니다.</p>
+          <ul class="teacher-tags"><li>물리</li><li>화학</li><li>생명과학</li></ul>
+        </div>
+      </div>
+      <div class="teacher-card">
+        <div class="teacher-photo">
+          <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
+          <span class="teacher-badge">사</span>
+        </div>
+        <div class="teacher-info">
+          <div class="subj">사탐 · 한국사·통합사회</div>
+          <h3>임수아 선생님</h3>
+          <p>흐름 중심의 한국사 학습과 개념 정리형 통합사회 지도가 전문인 사탐 강사. 암기가 아닌 이해 중심 수업을 진행합니다.</p>
+          <ul class="teacher-tags"><li>한국사</li><li>통합사회</li><li>개념정리</li></ul>
         </div>
       </div>
     </div>
