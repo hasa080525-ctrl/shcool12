@@ -244,26 +244,33 @@
   .why-card p{font-size:14px; color:var(--slate);}
 
   /* ---------- Teachers ---------- */
-  .teacher-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
-  .teacher-card{background:var(--paper-2); border:1px solid var(--line); padding:0; overflow:hidden;}
-  .teacher-photo{
-    height:220px; background:linear-gradient(135deg, var(--ink), var(--ink-2));
-    display:flex; align-items:center; justify-content:center;
-    position:relative;
+  #teachers{background:var(--ink);}
+  #teachers .section-head h2{color:#fff;}
+  #teachers .section-head p{color:#b7bdcc;}
+  .teacher-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;}
+  .teacher-card{
+    background:var(--ink-2); border:1px solid var(--line-dark);
+    padding:34px 26px 30px; text-align:center;
   }
-  .avatar-icon{width:64px; height:64px; color:rgba(232,199,122,0.35);}
+  .teacher-avatar-ring{
+    width:104px; height:104px; border-radius:50%; margin:0 auto 20px; position:relative;
+    background:radial-gradient(circle at 35% 30%, #24345e, var(--ink) 75%);
+    border:2px solid var(--gold-light);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .avatar-icon{width:50px; height:50px; color:rgba(232,199,122,0.55);}
   .teacher-badge{
-    position:absolute; bottom:14px; right:14px; width:32px; height:32px; border-radius:50%;
-    background:var(--ink); border:2px solid var(--gold-light); color:var(--gold-light);
-    font-family:'Noto Serif KR', serif; font-weight:700; font-size:13px;
+    position:absolute; bottom:-3px; right:-3px; width:30px; height:30px; border-radius:50%;
+    background:var(--gold); border:2px solid var(--ink-2); color:var(--ink);
+    font-family:'Noto Serif KR', serif; font-weight:700; font-size:12.5px;
     display:flex; align-items:center; justify-content:center;
   }
-  .teacher-info{padding:24px 26px;}
-  .teacher-info .subj{font-size:12px; font-weight:700; color:var(--gold); letter-spacing:0.05em; margin-bottom:8px;}
-  .teacher-info h3{font-size:18px; margin-bottom:8px; color:var(--ink);}
-  .teacher-info p{font-size:13.5px; color:var(--slate);}
-  .teacher-tags{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
-  .teacher-tags li{list-style:none; font-size:11.5px; color:var(--slate); background:var(--paper); padding:5px 10px; border:1px solid var(--line);}
+  .teacher-info{padding:0;}
+  .teacher-info .subj{font-size:12px; font-weight:700; color:var(--gold-light); letter-spacing:0.05em; margin-bottom:8px;}
+  .teacher-info h3{font-size:18px; margin-bottom:8px; color:#fff;}
+  .teacher-info p{font-size:13.5px; color:#b7bdcc;}
+  .teacher-tags{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; justify-content:center;}
+  .teacher-tags li{list-style:none; font-size:11.5px; color:#c4cadb; background:var(--ink); padding:5px 10px; border:1px solid var(--line-dark);}
 
   /* ---------- Process ---------- */
   .process{background:var(--ink); color:#fff;}
@@ -523,7 +530,7 @@
   </div>
 </section>
 
-<section id="teachers" style="background:var(--paper-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+<section id="teachers">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow-line"><span class="bar"></span><span>OUR TEACHERS</span></div>
@@ -532,7 +539,7 @@
     </div>
     <div class="teacher-grid">
       <div class="teacher-card">
-        <div class="teacher-photo">
+        <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">초</span>
         </div>
@@ -544,7 +551,7 @@
         </div>
       </div>
       <div class="teacher-card">
-        <div class="teacher-photo">
+        <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">중</span>
         </div>
@@ -556,7 +563,7 @@
         </div>
       </div>
       <div class="teacher-card">
-        <div class="teacher-photo">
+        <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">고</span>
         </div>
@@ -568,7 +575,7 @@
         </div>
       </div>
       <div class="teacher-card">
-        <div class="teacher-photo">
+        <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">국</span>
         </div>
@@ -580,7 +587,7 @@
         </div>
       </div>
       <div class="teacher-card">
-        <div class="teacher-photo">
+        <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">영</span>
         </div>
@@ -592,7 +599,7 @@
         </div>
       </div>
       <div class="teacher-card">
-        <div class="teacher-photo">
+        <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">수</span>
         </div>
@@ -604,7 +611,7 @@
         </div>
       </div>
       <div class="teacher-card">
-        <div class="teacher-photo">
+        <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">과</span>
         </div>
@@ -616,7 +623,7 @@
         </div>
       </div>
       <div class="teacher-card">
-        <div class="teacher-photo">
+        <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">사</span>
         </div>
