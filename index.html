@@ -83,7 +83,7 @@
   }
   .nav-links a:hover::after{width:100%;}
   .nav-cta{
-    background:var(--ink); color:#fff; font-size:13.5px; font-weight:600;
+    display:inline-block; background:var(--ink); color:#fff; font-size:13.5px; font-weight:600;
     padding:11px 22px; border:none; letter-spacing:0.02em;
   }
   .nav-cta:hover{background:var(--ink-2);}
@@ -417,7 +417,7 @@
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-right">
-      <button class="nav-cta" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">상담 신청</button>
+      <a class="nav-cta" href="tel:010-3951-0535">상담 신청</a>
       <button class="burger" id="burgerBtn" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileNav">
         <span></span><span></span><span></span>
       </button>
