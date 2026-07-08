@@ -298,6 +298,14 @@
   .review-card p{font-size:14.5px; color:var(--ink-2); margin-bottom:18px;}
   .review-meta{font-size:12.5px; color:var(--slate-2); border-top:1px solid var(--line); padding-top:14px;}
 
+  /* ---------- News ---------- */
+  .news-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .news-card{background:var(--paper-2); border:1px solid var(--line); padding:26px; transition:border-color .2s ease;}
+  .news-card:hover{border-color:var(--gold);}
+  .news-date{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--gold); font-weight:700; margin-bottom:12px; letter-spacing:0.04em;}
+  .news-card h3{font-size:16.5px; color:var(--ink); margin-bottom:10px; line-height:1.4;}
+  .news-card p{font-size:13.5px; color:var(--slate);}
+
   /* ---------- CTA / form ---------- */
   .cta-section{background:var(--paper-2); border-top:1px solid var(--line);}
   .cta-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;}
@@ -367,6 +375,7 @@
     .process-grid::before{display:none;}
     .stats-band{grid-template-columns:repeat(2,1fr);}
     .review-grid{grid-template-columns:1fr;}
+    .news-grid{grid-template-columns:1fr;}
     .cta-grid{grid-template-columns:1fr; gap:36px;}
     .form-card{padding:28px 22px;}
     .form-row{grid-template-columns:1fr;}
@@ -404,6 +413,7 @@
       <a href="#teachers">선생님 소개</a>
       <a href="#process">진행 절차</a>
       <a href="#reviews">합격 후기</a>
+      <a href="#news">입시 소식</a>
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-right">
@@ -419,6 +429,7 @@
     <a href="#teachers">선생님 소개</a>
     <a href="#process">진행 절차</a>
     <a href="#reviews">합격 후기</a>
+    <a href="#news">입시 소식</a>
     <a href="#faq">FAQ</a>
   </nav>
 </header>
@@ -679,6 +690,33 @@
         <div class="review-stars">★★★★★</div>
         <p>초등 저학년이라 놀이처럼 접근해주셔서 아이가 공부를 싫어하지 않게 된 게 가장 큰 변화예요.</p>
         <div class="review-meta">초3 학부모 · 국어·수학</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="news" style="background:var(--paper-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-line"><span class="bar"></span><span>ADMISSIONS NEWS</span></div>
+      <h2>입시 소식</h2>
+      <p>학부모님께 도움이 될 대입·고입 관련 소식과 일정을 정리해서 전해드립니다.</p>
+    </div>
+    <div class="news-grid" id="newsGrid">
+      <div class="news-card">
+        <div class="news-date mono">2026.00.00</div>
+        <h3>[예시] 입시 소식 제목을 입력해주세요</h3>
+        <p>이 자리에 실제 뉴스나 공지 요약 내용이 들어갑니다. 제목·날짜·내용을 알려주시면 바로 교체해드립니다.</p>
+      </div>
+      <div class="news-card">
+        <div class="news-date mono">2026.00.00</div>
+        <h3>[예시] 입시 소식 제목을 입력해주세요</h3>
+        <p>이 자리에 실제 뉴스나 공지 요약 내용이 들어갑니다. 제목·날짜·내용을 알려주시면 바로 교체해드립니다.</p>
+      </div>
+      <div class="news-card">
+        <div class="news-date mono">2026.00.00</div>
+        <h3>[예시] 입시 소식 제목을 입력해주세요</h3>
+        <p>이 자리에 실제 뉴스나 공지 요약 내용이 들어갑니다. 제목·날짜·내용을 알려주시면 바로 교체해드립니다.</p>
       </div>
     </div>
   </div>
