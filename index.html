@@ -11,7 +11,7 @@
 <meta name="naver-site-verification" content="5a9187c79149c6b9465edd072b58620bc0fbcbfe" />
 <meta name="description" content="초1부터 고3까지, 한 명의 아이를 12년간 지켜보는 1:1 전문 과외 성적오름입니다.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<meta name="keywords" content="과외, 1:1 과외, 초등 과외, 중등 과외, 고등 과외, 내신 과외, 수능 과외, 성적오름, 국어 과외, 영어 과외, 수학 과외, 사회 과외, 과학 과외, 코딩 과외, 자기주도학습 코칭, 초1 과외, 초2 과외, 초3 과외, 초4 과외, 초5 과외, 초6 과외, 중1 과외, 중2 과외, 중3 과외, 고1 과외, 고2 과외, 고3 과외, 재수생 과외, 방문과외, 방문선생님, 여자선생님 과외, 남자선생님 과외, 여샘, 남샘, 대면과외, 카페과외, 스터디카페 과외, 스카과외, 화상과외, 온라인과외, 전국 과외, 서울 과외, 경기 과외, 인천 과외, 부산 과외, 대구 과외, 광주 과외, 대전 과외, 울산 과외, 세종 과외, 강원 과외, 충북 과외, 충남 과외, 전북 과외, 전남 과외, 경북 과외, 경남 과외, 제주 과외">
+<meta name="keywords" content="과외, 1:1 과외, 초등 과외, 중등 과외, 고등 과외, 내신 과외, 수능 과외, 성적오름, 국어 과외, 영어 과외, 수학 과외, 사회 과외, 과학 과외, 코딩 과외, 자기주도학습 코칭, 초1 과외, 초2 과외, 초3 과외, 초4 과외, 초5 과외, 초6 과외, 중1 과외, 중2 과외, 중3 과외, 고1 과외, 고2 과외, 고3 과외, 재수생 과외, 방문과외, 방문선생님, 여자선생님 과외, 남자선생님 과외, 여샘, 남샘, 대면과외, 카페과외, 스터디카페 과외, 스카과외, 화상과외, 온라인과외, 전국 과외, 서울 과외, 경기 과외, 인천 과외, 부산 과외, 대구 과외, 광주 과외, 대전 과외, 울산 과외, 세종 과외, 강원 과외, 충북 과외, 충남 과외, 전북 과외, 전남 과외, 경북 과외, 경남 과외, 제주 과외, 특목고 과외, 외고 과외, 외국어고 과외, 국제고 과외, 과학고 과외, 자사고 과외, 특목고 내신, 대원외고 과외, 대일외고 과외, 명덕외고 과외, 한영외고 과외, 이화외고 과외, 서울외고 과외, 서울국제고 과외, 인천국제고 과외, 청심국제고 과외, 동탄국제고 과외, 청원국제고 과외, 부산국제고 과외, 서울과학고 과외, 경기과학고 과외, 한성과학고 과외, 세종과학고 과외, 하나고 과외, 민사고 과외, 상산고 과외, 세화고 과외, 특목고 대비 과외">
 <link rel="canonical" href="https://shcool123.co.kr/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="성적오름">
@@ -166,8 +166,8 @@
     color:var(--gold-light); font-size:14px; font-weight:700;
     font-family:'Noto Serif KR', serif;
   }
-  .nav-links{display:flex; gap:36px; font-size:14.5px; font-weight:500; color:var(--slate);}
-  .nav-links a{position:relative; padding:6px 0;}
+  .nav-links{display:flex; gap:20px; font-size:13px; font-weight:500; color:var(--slate);}
+  .nav-links a{position:relative; padding:6px 0; white-space:nowrap;}
   .nav-links a:hover{color:var(--ink);}
   .nav-links a::after{
     content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
@@ -379,6 +379,29 @@
   .format-card h4{font-size:15.5px; margin:12px 0 6px; color:var(--ink);}
   .format-card p{font-size:13px; color:var(--slate); line-height:1.5;}
 
+  /* ---------- Special-purpose schools ---------- */
+  .school-search{display:flex; gap:10px; max-width:520px; margin:0 auto 44px;}
+  .school-search input{
+    flex:1; padding:14px 16px; background:var(--paper-2); border:1px solid var(--line);
+    color:var(--ink); font-size:14.5px; font-family:inherit;
+  }
+  .school-search input::placeholder{color:var(--slate-2);}
+  .school-search input:focus{border-color:var(--gold); outline:none;}
+  .school-search button{
+    padding:14px 22px; background:var(--gold); color:var(--ink); border:none;
+    font-weight:700; font-size:14px; white-space:nowrap; cursor:pointer;
+  }
+  .school-search button:hover{background:var(--gold-light);}
+  .school-search-result{
+    max-width:520px; margin:-28px auto 44px; padding:16px 18px; background:var(--paper-2);
+    border:1px solid var(--gold); font-size:14px; color:var(--ink); text-align:center;
+  }
+  .school-cat-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .school-cat{background:var(--paper-2); padding:24px 20px;}
+  .school-cat h4{font-size:14.5px; color:var(--gold); margin-bottom:14px; text-align:center;}
+  .school-cat .chip-wrap{justify-content:flex-start; flex-direction:column; gap:8px;}
+  .school-cat .region-chip{padding:8px 12px; font-size:12.5px; font-weight:500; text-align:center;}
+
   /* ---------- Process ---------- */
   .process{background:var(--ink); color:#fff;}
   .process .section-head h2{color:#fff;}
@@ -488,6 +511,8 @@
     .why-grid{grid-template-columns:repeat(2,1fr);}
     .teacher-grid{grid-template-columns:1fr;}
     .format-grid{grid-template-columns:1fr;}
+    .school-cat-grid{grid-template-columns:repeat(2,1fr);}
+    .school-search{flex-direction:column;}
     .process-grid{grid-template-columns:1fr 1fr; row-gap:36px;}
     .process-grid::before{display:none;}
     .stats-band{grid-template-columns:repeat(2,1fr);}
@@ -511,6 +536,7 @@
     .dday-card{padding:26px 22px;}
     .dday-number{font-size:48px;}
     .why-grid{grid-template-columns:1fr;}
+    .school-cat-grid{grid-template-columns:1fr;}
     .stats-band{grid-template-columns:1fr 1fr;}
     .stat-cell{padding:22px 18px;}
     .stat-num{font-size:28px;}
@@ -528,6 +554,7 @@
       <a href="#roadmap">학년별 과정</a>
       <a href="#why">성적오름의 방식</a>
       <a href="#teachers">선생님 소개</a>
+      <a href="#specialschools">특목고</a>
       <a href="#regions">지역·수업방식</a>
       <a href="#process">진행 절차</a>
       <a href="#reviews">합격 후기</a>
@@ -545,6 +572,7 @@
     <a href="#roadmap">학년별 과정</a>
     <a href="#why">성적오름의 방식</a>
     <a href="#teachers">선생님 소개</a>
+    <a href="#specialschools">특목고</a>
     <a href="#regions">지역·수업방식</a>
     <a href="#process">진행 절차</a>
     <a href="#reviews">합격 후기</a>
@@ -773,6 +801,68 @@
     </div>
     <p style="margin-top:28px; text-align:center; font-size:13.5px; color:var(--slate);">
       모든 과목에서 여자 선생님·남자 선생님 모두 선택하실 수 있습니다. 상담 시 선호하시는 선생님을 말씀해주세요.
+    </p>
+  </div>
+</section>
+
+<section id="specialschools">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-line"><span class="bar"></span><span>SPECIAL PURPOSE HS</span></div>
+      <h2>특목고 입시·내신도 함께 준비합니다</h2>
+      <p>외고·국제고·과학고·자사고 지망생과 재학생을 함께 지도합니다. 우리 학교를 검색해보세요.</p>
+    </div>
+
+    <div class="school-search">
+      <input type="text" id="schoolSearchInput" placeholder="예: 대원외고, 서울국제고, 하나고..." onkeydown="if(event.key==='Enter')searchSchool()">
+      <button type="button" onclick="searchSchool()">검색</button>
+    </div>
+    <div id="schoolSearchResult" class="school-search-result" style="display:none;"></div>
+
+    <div class="school-cat-grid">
+      <div class="school-cat">
+        <h4>외국어고</h4>
+        <ul class="chip-wrap">
+          <li class="region-chip">대원외고</li>
+          <li class="region-chip">대일외고</li>
+          <li class="region-chip">명덕외고</li>
+          <li class="region-chip">한영외고</li>
+          <li class="region-chip">이화외고</li>
+          <li class="region-chip">서울외고</li>
+        </ul>
+      </div>
+      <div class="school-cat">
+        <h4>국제고</h4>
+        <ul class="chip-wrap">
+          <li class="region-chip">서울국제고</li>
+          <li class="region-chip">인천국제고</li>
+          <li class="region-chip">청심국제고</li>
+          <li class="region-chip">동탄국제고</li>
+          <li class="region-chip">청원국제고</li>
+          <li class="region-chip">부산국제고</li>
+        </ul>
+      </div>
+      <div class="school-cat">
+        <h4>과학고</h4>
+        <ul class="chip-wrap">
+          <li class="region-chip">서울과학고</li>
+          <li class="region-chip">경기과학고</li>
+          <li class="region-chip">한성과학고</li>
+          <li class="region-chip">세종과학고</li>
+        </ul>
+      </div>
+      <div class="school-cat">
+        <h4>자사고</h4>
+        <ul class="chip-wrap">
+          <li class="region-chip">하나고</li>
+          <li class="region-chip">민사고</li>
+          <li class="region-chip">상산고</li>
+          <li class="region-chip">세화고</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:28px; text-align:center; font-size:13.5px; color:var(--slate);">
+      목록에 없는 학교도 문의해주시면 내신 자료 확보 여부를 확인해드립니다.
     </p>
   </div>
 </section>
@@ -1045,6 +1135,7 @@
         <h4>바로가기</h4>
         <a href="#roadmap">학년별 과정</a>
         <a href="#teachers">선생님 소개</a>
+        <a href="#specialschools">특목고</a>
         <a href="#regions">지역·수업방식</a>
         <a href="#reviews">합격 후기</a>
       </div>
@@ -1139,6 +1230,19 @@ document.querySelectorAll('.tab').forEach(tab => {
     renderNodes(tab.dataset.group);
   });
 });
+
+/* ---------- School search ---------- */
+function searchSchool(){
+  const input = document.getElementById('schoolSearchInput');
+  const result = document.getElementById('schoolSearchResult');
+  const school = input.value.trim();
+  if(!school){
+    input.focus();
+    return;
+  }
+  result.textContent = school + ' 학생을 위한 맞춤 내신 전략, 무료 상담에서 확인해보세요 →';
+  result.style.display = 'block';
+}
 
 /* ---------- Apply form: mailto submit ---------- */
 function submitApplyForm(){
