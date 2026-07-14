@@ -41,6 +41,7 @@
   "telephone": "+82-10-3951-0535",
   "areaServed": "KR",
   "inLanguage": "ko-KR",
+  "sameAs": ["https://open.kakao.com/o/sOXeVnpi"],
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+82-10-3951-0535",
@@ -211,6 +212,7 @@
     height:48px; font-size:14.5px; font-weight:700; border:none;
   }
   .mobile-cta-call{background:var(--ink); color:#fff;}
+  .mobile-cta-kakao{background:#FEE500; color:#191919;}
   .mobile-cta-apply{background:var(--gold); color:var(--ink);}
 
   /* ---------- Hero ---------- */
@@ -329,6 +331,19 @@
     list-style:none; font-size:12.5px; font-weight:600; color:var(--ink-2);
     background:#fff; border:1px solid var(--line); padding:6px 12px;
   }
+
+  /* ---------- Checkpoints ---------- */
+  #checkpoints{background:var(--paper-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .checkpoint-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; max-width:920px; margin:0 auto;}
+  .checkpoint-card{
+    display:flex; gap:12px; align-items:flex-start; background:var(--paper); border:1px solid var(--line);
+    padding:20px 18px;
+  }
+  .checkpoint-check{
+    flex-shrink:0; width:24px; height:24px; border-radius:50%; background:var(--gold);
+    color:var(--ink); font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  }
+  .checkpoint-card p{font-size:14px; color:var(--ink); line-height:1.5; margin:0;}
 
   /* ---------- Why us ---------- */
   .why-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
@@ -495,6 +510,8 @@
   .foot-col h4{font-size:13px; color:#fff; margin-bottom:16px; font-weight:600;}
   .foot-col a{display:block; font-size:13px; margin-bottom:10px; color:#9aa1b5;}
   .foot-col a:hover{color:var(--gold-light);}
+  .foot-keywords{border-top:1px solid var(--line-dark); padding:22px 0; font-size:12px; line-height:2;}
+  .foot-keywords b{color:#c4cadb; font-weight:600; margin-right:8px;}
   .foot-bottom{border-top:1px solid var(--line-dark); padding-top:22px; font-size:12px; display:flex; justify-content:space-between;}
 
   /* ---------- Responsive ---------- */
@@ -509,6 +526,7 @@
     .hero h1{font-size:34px;}
     .hero p{font-size:15.5px;}
     .why-grid{grid-template-columns:repeat(2,1fr);}
+    .checkpoint-grid{grid-template-columns:1fr 1fr;}
     .teacher-grid{grid-template-columns:1fr;}
     .format-grid{grid-template-columns:1fr;}
     .school-cat-grid{grid-template-columns:repeat(2,1fr);}
@@ -582,8 +600,9 @@
 </header>
 
 <div class="mobile-cta-bar">
-  <a class="mobile-cta-call" href="tel:010-3951-0535">☎ 010-3951-0535</a>
-  <button class="mobile-cta-apply" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">무료 진단 신청</button>
+  <a class="mobile-cta-call" href="tel:010-3951-0535">☎ 전화</a>
+  <a class="mobile-cta-kakao" href="https://open.kakao.com/o/sOXeVnpi" target="_blank" rel="noopener">💬 카톡</a>
+  <button class="mobile-cta-apply" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">진단 신청</button>
 </div>
 
 <section class="hero">
@@ -605,6 +624,7 @@
       <div class="dday-divider"></div>
       <div class="dday-stats">
         <div><b>1:1</b>전 과목 맞춤</div>
+        <div><b>830+</b>누적 지도 사례</div>
         <div><b>12년</b>초중고 통합 지도</div>
       </div>
     </div>
@@ -635,6 +655,24 @@
     </div>
 
     <div class="road-detail" id="roadDetail"></div>
+  </div>
+</section>
+
+<section id="checkpoints">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-line"><span class="bar"></span><span>CHECK YOURSELF</span></div>
+      <h2>이런 고민, 있으신가요?</h2>
+      <p>하나라도 해당되면 지금이 방법을 바꿔볼 타이밍입니다.</p>
+    </div>
+    <div class="checkpoint-grid">
+      <div class="checkpoint-card"><div class="checkpoint-check">✓</div><p>숙제는 꼬박꼬박 하는데 성적은 제자리인 아이</p></div>
+      <div class="checkpoint-card"><div class="checkpoint-check">✓</div><p>학원 진도만 따라가다 정작 학교 시험을 놓치는 아이</p></div>
+      <div class="checkpoint-card"><div class="checkpoint-check">✓</div><p>공부 방법을 몰라 시간만 오래 쏟는 아이</p></div>
+      <div class="checkpoint-card"><div class="checkpoint-check">✓</div><p>학년이 올라갈수록 벌어지는 격차가 불안한 학부모님</p></div>
+      <div class="checkpoint-card"><div class="checkpoint-check">✓</div><p>아이와 대화가 잘 안 통해 학습 상태를 파악하기 어려운 학부모님</p></div>
+      <div class="checkpoint-card"><div class="checkpoint-check">✓</div><p>선생님을 자주 바꾸게 되어 매번 처음부터 설명해야 하는 경우</p></div>
+    </div>
   </div>
 </section>
 
@@ -1017,8 +1055,8 @@
         <div><b>전화 상담</b><span><a href="tel:010-3951-0535" style="color:inherit; text-decoration:underline;">010-3951-0535</a> · 평일 10:00 – 20:00</span></div>
       </div>
       <div class="cta-info-item">
-        <div class="cta-info-icon">✉</div>
-        <div><b>온라인 상담</b><span>신청 후 24시간 이내 회신</span></div>
+        <div class="cta-info-icon">💬</div>
+        <div><b>카카오톡 상담</b><span><a href="https://open.kakao.com/o/sOXeVnpi" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">오픈채팅 바로가기</a> · 24시간 접수 가능</span></div>
       </div>
       <div class="cta-info-item">
         <div class="cta-info-icon">◈</div>
@@ -1149,6 +1187,11 @@
         <a href="tel:010-3951-0535">010-3951-0535</a>
         <a href="mailto:hasa21@naver.com">hasa21@naver.com</a>
       </div>
+    </div>
+    <div class="foot-keywords">
+      <p><b>지역별 과외</b>서울 · 경기 · 인천 · 부산 · 대구 · 광주 · 대전 · 울산 · 세종 · 강원 · 충북 · 충남 · 전북 · 전남 · 경북 · 경남 · 제주</p>
+      <p><b>과목별 과외</b>국어 · 영어 · 수학 · 사회 · 과학 · 코딩 · 자기주도학습 코칭</p>
+      <p><b>학년별 과외</b>초1 · 초2 · 초3 · 초4 · 초5 · 초6 · 중1 · 중2 · 중3 · 고1 · 고2 · 고3 · 재수생</p>
     </div>
     <div class="foot-bottom">
       <span>© 2026 성적오름. All rights reserved.</span>
