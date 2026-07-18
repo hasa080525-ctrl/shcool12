@@ -438,7 +438,7 @@
   .school-search{display:flex; gap:10px; max-width:520px; margin:0 auto 44px;}
   .school-search input{
     flex:1; padding:14px 16px; background:var(--paper-2); border:1px solid var(--line);
-    color:var(--ink); font-size:14.5px; font-family:inherit;
+    color:var(--ink); font-size:16px; font-family:inherit;
   }
   .school-search input::placeholder{color:var(--slate-2);}
   .school-search input:focus{border-color:var(--gold); outline:none;}
@@ -519,7 +519,7 @@
   .field label{display:block; font-size:12.5px; color:var(--slate-2); margin-bottom:7px; font-weight:600;}
   .field input, .field select{
     width:100%; padding:12px 14px; background:var(--ink-2); border:1px solid var(--line-dark);
-    color:#fff; font-size:14px; font-family:inherit;
+    color:#fff; font-size:16px; font-family:inherit;
   }
   .field input::placeholder{color:#6d7691;}
   .field input:focus, .field select:focus{border-color:var(--gold); outline:none;}
@@ -570,6 +570,8 @@
     .teacher-grid{grid-template-columns:1fr;}
     .format-grid{grid-template-columns:1fr;}
     .school-cat-grid{grid-template-columns:repeat(2,1fr);}
+    .school-cat .chip-wrap{flex-direction:row; flex-wrap:wrap;}
+    .school-cat .region-chip{flex:1 1 calc(50% - 4px);}
     .school-search{flex-direction:column;}
     .process-grid{grid-template-columns:1fr 1fr; row-gap:36px;}
     .process-grid::before{display:none;}
