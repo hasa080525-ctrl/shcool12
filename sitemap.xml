@@ -13,6 +13,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://shcool123.co.kr/camp.html</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://shcool123.co.kr/courses/%EC%84%9C%EC%9A%B8-%EC%B4%88%EB%93%B1%EC%88%98%ED%95%99%EA%B3%BC%EC%99%B8.html</loc>
     <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
