@@ -435,8 +435,11 @@
   .district-panel-title{font-size:13px; font-weight:700; color:var(--gold); letter-spacing:0.04em; margin-bottom:14px; text-align:center;}
   .district-wrap{justify-content:center;}
   .district-wrap .region-chip{
-    font-size:12px; font-weight:500; padding:6px 12px; background:var(--paper-2); cursor:default;
+    font-size:12px; font-weight:500; padding:6px 12px; background:var(--paper-2); cursor:pointer;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
   }
+  .district-wrap .region-chip:hover{border-color:var(--gold);}
+  .district-wrap .region-chip.selected{background:var(--gold); color:#fff; border-color:var(--gold);}
   .district-wrap .district-note{font-size:13px; color:var(--slate); text-align:center; width:100%;}
   .format-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px;}
   .format-card{background:var(--paper-2); padding:28px 24px; text-align:center;}
@@ -988,7 +991,9 @@
     </ul>
     <div class="district-panel">
       <div class="district-panel-title" id="districtTitle">서울 시/군/구</div>
+      <p style="text-align:center; font-size:12.5px; color:var(--slate-2); margin:-6px 0 16px;">우리 동네를 눌러보세요</p>
       <ul class="chip-wrap district-wrap" id="districtList"></ul>
+      <div id="districtSearchResult" class="school-search-result" style="display:none; margin:20px auto 0; max-width:520px; cursor:pointer;"></div>
     </div>
     <p style="text-align:center; margin-top:18px;"><a href="/courses/" style="color:var(--gold); font-weight:600; font-size:14px;">지역별·학년별·과목별 과외 전체 목록 보기 →</a></p>
     <div class="format-grid">
@@ -1376,9 +1381,11 @@ const REGION_NOTE = {
 function renderDistricts(region){
   const title = document.getElementById('districtTitle');
   const list = document.getElementById('districtList');
+  const result = document.getElementById('districtSearchResult');
   const districts = REGION_DISTRICTS[region] || [];
   title.textContent = region + ' 시/군/구';
   list.innerHTML = '';
+  result.style.display = 'none';
   if(districts.length === 0){
     const note = document.createElement('li');
     note.className = 'district-note';
@@ -1390,9 +1397,24 @@ function renderDistricts(region){
     const li = document.createElement('li');
     li.className = 'region-chip';
     li.textContent = d;
+    li.dataset.district = d;
     list.appendChild(li);
   });
 }
+
+document.getElementById('districtList').addEventListener('click', function(e){
+  const chip = e.target.closest('.region-chip[data-district]');
+  if(!chip) return;
+  document.querySelectorAll('#districtList .region-chip').forEach(c => c.classList.remove('selected'));
+  chip.classList.add('selected');
+  const district = chip.dataset.district;
+  const result = document.getElementById('districtSearchResult');
+  result.textContent = district + ' 학생을 위한 맞춤 과외 안내, 무료 상담에서 확인해보세요 →';
+  result.style.display = 'block';
+  result.onclick = function(){
+    document.getElementById('apply').scrollIntoView({behavior:'smooth'});
+  };
+});
 
 document.getElementById('regionTabs').addEventListener('click', function(e){
   const chip = e.target.closest('.region-chip[data-region]');
