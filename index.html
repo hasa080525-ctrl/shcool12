@@ -428,8 +428,16 @@
     list-style:none; font-size:13.5px; font-weight:600; color:var(--ink);
     background:var(--paper-2); border:1px solid var(--line); padding:9px 18px; border-radius:2px;
   }
-  .region-chip a{display:block; margin:-9px -18px; padding:9px 18px; color:inherit; text-decoration:none;}
-  .region-chip a:hover{color:var(--gold);}
+  .region-wrap .region-chip{cursor:pointer; transition:background .15s ease, color .15s ease, border-color .15s ease;}
+  .region-wrap .region-chip:hover{border-color:var(--gold);}
+  .region-wrap .region-chip.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .district-panel{max-width:820px; margin:24px auto 0; background:var(--paper); border:1px solid var(--line); padding:24px 28px;}
+  .district-panel-title{font-size:13px; font-weight:700; color:var(--gold); letter-spacing:0.04em; margin-bottom:14px; text-align:center;}
+  .district-wrap{justify-content:center;}
+  .district-wrap .region-chip{
+    font-size:12px; font-weight:500; padding:6px 12px; background:var(--paper-2); cursor:default;
+  }
+  .district-wrap .district-note{font-size:13px; color:var(--slate); text-align:center; width:100%;}
   .format-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:40px;}
   .format-card{background:var(--paper-2); padding:28px 24px; text-align:center;}
   .format-card .glyph{font-size:22px; color:var(--gold);}
@@ -959,25 +967,29 @@
       <h2>전국 어디서나 만나는 성적오름</h2>
       <p>화상 과외는 전국 전 지역에서 가능하며, 방문·대면 과외는 지역 상황에 따라 조율해드립니다. 서울 고등수학과외, 경기 중등영어과외, 부산 초등국어과외처럼 지역·학년·과목을 조합한 어떤 조건이라도 맞춤 선생님을 연결해 드립니다.</p>
     </div>
-    <ul class="chip-wrap region-wrap">
-      <li class="region-chip">서울</li>
-      <li class="region-chip">경기</li>
-      <li class="region-chip">인천</li>
-      <li class="region-chip">부산</li>
-      <li class="region-chip">대구</li>
-      <li class="region-chip">광주</li>
-      <li class="region-chip">대전</li>
-      <li class="region-chip">울산</li>
-      <li class="region-chip">세종</li>
-      <li class="region-chip">강원</li>
-      <li class="region-chip">충북</li>
-      <li class="region-chip">충남</li>
-      <li class="region-chip">전북</li>
-      <li class="region-chip">전남</li>
-      <li class="region-chip">경북</li>
-      <li class="region-chip">경남</li>
-      <li class="region-chip">제주</li>
+    <ul class="chip-wrap region-wrap" id="regionTabs">
+      <li class="region-chip active" data-region="서울">서울</li>
+      <li class="region-chip" data-region="경기">경기</li>
+      <li class="region-chip" data-region="인천">인천</li>
+      <li class="region-chip" data-region="부산">부산</li>
+      <li class="region-chip" data-region="대구">대구</li>
+      <li class="region-chip" data-region="광주">광주</li>
+      <li class="region-chip" data-region="대전">대전</li>
+      <li class="region-chip" data-region="울산">울산</li>
+      <li class="region-chip" data-region="세종">세종</li>
+      <li class="region-chip" data-region="강원">강원</li>
+      <li class="region-chip" data-region="충북">충북</li>
+      <li class="region-chip" data-region="충남">충남</li>
+      <li class="region-chip" data-region="전북">전북</li>
+      <li class="region-chip" data-region="전남">전남</li>
+      <li class="region-chip" data-region="경북">경북</li>
+      <li class="region-chip" data-region="경남">경남</li>
+      <li class="region-chip" data-region="제주">제주</li>
     </ul>
+    <div class="district-panel">
+      <div class="district-panel-title" id="districtTitle">서울 시/군/구</div>
+      <ul class="chip-wrap district-wrap" id="districtList"></ul>
+    </div>
     <p style="text-align:center; margin-top:18px;"><a href="/courses/" style="color:var(--gold); font-weight:600; font-size:14px;">지역별·학년별·과목별 과외 전체 목록 보기 →</a></p>
     <div class="format-grid">
       <div class="format-card">
@@ -1335,6 +1347,62 @@ document.querySelectorAll('.tab').forEach(tab => {
     renderNodes(tab.dataset.group);
   });
 });
+
+/* ---------- Region -> 시/군/구 ---------- */
+const REGION_DISTRICTS = {
+  '서울': ['종로구','중구','용산구','성동구','광진구','동대문구','중랑구','성북구','강북구','도봉구','노원구','은평구','서대문구','마포구','양천구','강서구','구로구','금천구','영등포구','동작구','관악구','서초구','강남구','송파구','강동구'],
+  '경기': ['수원시','성남시','의정부시','안양시','부천시','광명시','동두천시','평택시','안산시','고양시','과천시','구리시','남양주시','오산시','시흥시','군포시','의왕시','하남시','용인시','파주시','이천시','안성시','김포시','화성시','광주시','양주시','포천시','여주시','연천군','가평군','양평군'],
+  '인천': ['제물포구','영종구','미추홀구','연수구','남동구','부평구','계양구','서해구','검단구','강화군','옹진군'],
+  '부산': ['중구','서구','동구','영도구','부산진구','동래구','남구','북구','강서구','해운대구','사하구','금정구','연제구','수영구','사상구','기장군'],
+  '대구': ['중구','동구','서구','남구','북구','수성구','달서구','달성군','군위군'],
+  '광주': ['동구','서구','남구','북구','광산구'],
+  '대전': ['중구','동구','서구','유성구','대덕구'],
+  '울산': ['중구','남구','동구','북구','울주군'],
+  '세종': [],
+  '강원': ['춘천시','원주시','강릉시','동해시','태백시','속초시','삼척시','홍천군','횡성군','영월군','평창군','정선군','철원군','화천군','양구군','인제군','고성군','양양군'],
+  '충북': ['청주시','충주시','제천시','보은군','옥천군','영동군','증평군','진천군','괴산군','음성군','단양군'],
+  '충남': ['천안시','공주시','보령시','아산시','서산시','논산시','계룡시','당진시','금산군','부여군','서천군','청양군','홍성군','예산군','태안군'],
+  '전북': ['전주시','군산시','익산시','정읍시','남원시','김제시','진안군','완주군','무주군','장수군','임실군','순창군','고창군','부안군'],
+  '전남': ['목포시','여수시','순천시','나주시','광양시','담양군','곡성군','구례군','고흥군','보성군','화순군','장흥군','강진군','해남군','영암군','무안군','함평군','영광군','장성군','완도군','진도군','신안군'],
+  '경북': ['포항시','경주시','김천시','안동시','구미시','영주시','영천시','상주시','문경시','경산시','의성군','청송군','영양군','영덕군','청도군','고령군','성주군','칠곡군','예천군','봉화군','울진군','울릉군'],
+  '경남': ['창원시','진주시','통영시','사천시','김해시','밀양시','거제시','양산시','의령군','함안군','창녕군','고성군','남해군','하동군','산청군','함양군','거창군','합천군'],
+  '제주': ['제주시','서귀포시'],
+};
+const REGION_NOTE = {
+  '세종': '세종특별자치시는 하위 시/군/구 없이 단일 행정구역으로 운영됩니다.',
+  '제주': '제주는 2006년 기초자치단체가 폐지되어 제주시·서귀포시 2개 행정시로만 구성됩니다.',
+};
+
+function renderDistricts(region){
+  const title = document.getElementById('districtTitle');
+  const list = document.getElementById('districtList');
+  const districts = REGION_DISTRICTS[region] || [];
+  title.textContent = region + ' 시/군/구';
+  list.innerHTML = '';
+  if(districts.length === 0){
+    const note = document.createElement('li');
+    note.className = 'district-note';
+    note.textContent = REGION_NOTE[region] || '';
+    list.appendChild(note);
+    return;
+  }
+  districts.forEach(d => {
+    const li = document.createElement('li');
+    li.className = 'region-chip';
+    li.textContent = d;
+    list.appendChild(li);
+  });
+}
+
+document.getElementById('regionTabs').addEventListener('click', function(e){
+  const chip = e.target.closest('.region-chip[data-region]');
+  if(!chip) return;
+  document.querySelectorAll('#regionTabs .region-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  renderDistricts(chip.dataset.region);
+});
+
+renderDistricts('서울');
 
 /* ---------- School search ---------- */
 function searchSchool(){
