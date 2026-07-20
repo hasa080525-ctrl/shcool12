@@ -1169,7 +1169,7 @@
       </div>
       <div class="field"><label>남기실 말씀 (선택)</label><input type="text" id="fMessage" placeholder="현재 고민이나 목표를 적어주세요"></div>
       <button class="form-submit" type="button" onclick="submitApplyForm()">상담 신청하기</button>
-      <div class="form-note">신청하기를 누르면 메일 앱이 열립니다. 내용 확인 후 "보내기"를 눌러야 접수가 완료됩니다.</div>
+      <div class="form-note">신청하기를 누르면 메일 앱과 카카오톡 오픈채팅이 함께 열립니다. 메일은 내용 확인 후 "보내기"를 눌러야 접수가 완료되며, 오픈채팅으로 바로 문의하셔도 됩니다.</div>
     </div>
   </div>
 </section>
@@ -1376,6 +1376,7 @@ function submitApplyForm(){
     '선생님 선호: ' + teacherGender + '\n' +
     '남기신 말씀: ' + (message || '(없음)')
   );
+  window.open('https://open.kakao.com/o/sOXeVnpi', '_blank', 'noopener');
   window.location.href = 'mailto:hasa21@naver.com?subject=' + mailSubject + '&body=' + mailBody;
 }
 
