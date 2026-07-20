@@ -1169,7 +1169,7 @@
       </div>
       <div class="field"><label>남기실 말씀 (선택)</label><input type="text" id="fMessage" placeholder="현재 고민이나 목표를 적어주세요"></div>
       <button class="form-submit" type="button" onclick="submitApplyForm()">상담 신청하기</button>
-      <div class="form-note">신청하기를 누르면 메일 앱과 카카오톡 오픈채팅이 함께 열립니다. 메일은 내용 확인 후 "보내기"를 눌러야 접수가 완료되며, 오픈채팅으로 바로 문의하셔도 됩니다.</div>
+      <div class="form-note">신청하기를 누르면 신청 내용이 자동으로 복사되고 카카오톡 오픈채팅이 열립니다. 채팅창에 붙여넣기(꾹 눌러서 붙여넣기) 하시면 접수가 완료됩니다.</div>
     </div>
   </div>
 </section>
@@ -1366,18 +1366,29 @@ function submitApplyForm(){
   const format = document.getElementById('fFormat').value;
   const teacherGender = document.getElementById('fTeacherGender').value;
   const message = document.getElementById('fMessage').value.trim();
-  const mailSubject = encodeURIComponent('[성적오름] 상담 신청 - ' + name);
-  const mailBody = encodeURIComponent(
+  const summary =
+    '[성적오름 상담 신청]\n' +
     '학생 이름: ' + name + '\n' +
     '학부모 연락처: ' + phone + '\n' +
     '학년: ' + grade + '\n' +
     '희망 과목: ' + subject + '\n' +
     '수업 방식: ' + format + '\n' +
     '선생님 선호: ' + teacherGender + '\n' +
-    '남기신 말씀: ' + (message || '(없음)')
-  );
+    '남기신 말씀: ' + (message || '(없음)');
+
+  // window.open must fire synchronously from the click handler, or browsers
+  // treat it as a blocked popup instead of a user-initiated action.
   window.open('https://open.kakao.com/o/sOXeVnpi', '_blank', 'noopener');
-  window.location.href = 'mailto:hasa21@naver.com?subject=' + mailSubject + '&body=' + mailBody;
+
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(summary).then(function(){
+      alert('신청 내용이 복사되었습니다.\n곧 열리는(또는 열린) 카카오톡 채팅창에 붙여넣기(꾹 눌러서 붙여넣기) 해주세요!');
+    }).catch(function(){
+      alert('아래 오픈채팅에서 다음 내용으로 상담 신청해주세요:\n\n' + summary);
+    });
+  } else {
+    alert('아래 오픈채팅에서 다음 내용으로 상담 신청해주세요:\n\n' + summary);
+  }
 }
 
 /* ---------- Mobile nav toggle ---------- */
