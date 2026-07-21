@@ -1,8 +1,14 @@
 /*
- * Generates one static landing page per (region x grade x subject) combination
- * under /courses/, plus a hub page at /courses/index.html linking all of them.
- * Re-run this script (`node scripts/generate-courses.js`) whenever region/grade/
- * subject copy needs to change — do not hand-edit the generated files directly.
+ * Generates static landing pages under /courses/:
+ *  - 1 hub page listing all 17 regions
+ *  - 153 region pages (region x grade x subject)
+ *  - ~2,061 district pages (region x district x grade x subject), one per
+ *    real 시/군/구, so region-level searches ("서울 고등수학과외") and
+ *    district-level searches ("강남구 고등수학과외") both have a matching
+ *    page. Also (re)writes sitemap-courses.xml with every URL from this run.
+ * Re-run this script (`node scripts/generate-courses.js`) whenever region/
+ * grade/subject/district copy needs to change — do not hand-edit the
+ * generated files directly.
  */
 const fs = require('fs');
 const path = require('path');
@@ -56,7 +62,8 @@ const CONTENT = {
 // Real KR administrative district data, kept in sync with REGION_DISTRICTS /
 // REGION_NOTE in index.html (the interactive SERVICE AREA section there).
 // Used to give each of the 17 region pages genuinely distinct body content
-// instead of only swapping the region name into shared boilerplate.
+// instead of only swapping the region name into shared boilerplate, and as
+// the source list for the district-level pages generated below.
 const REGION_DISTRICTS = {
   '서울': ['종로구','중구','용산구','성동구','광진구','동대문구','중랑구','성북구','강북구','도봉구','노원구','은평구','서대문구','마포구','양천구','강서구','구로구','금천구','영등포구','동작구','관악구','서초구','강남구','송파구','강동구'],
   '경기': ['수원시','성남시','의정부시','안양시','부천시','광명시','동두천시','평택시','안산시','고양시','과천시','구리시','남양주시','오산시','시흥시','군포시','의왕시','하남시','용인시','파주시','이천시','안성시','김포시','화성시','광주시','양주시','포천시','여주시','연천군','가평군','양평군'],
@@ -89,9 +96,9 @@ function districtSection(region) {
   return `${region.name} ${districts.length}개 시/군/구(${districts.join('·')}) 전 지역에서 동일한 커리큘럼과 선생님 매칭 기준으로 수업이 진행됩니다.`;
 }
 
-// Picks the 은/는 topic particle based on whether the region name's last
-// syllable has a batchim (final consonant) - e.g. 경기/대구/광주/제주 need
-// "는", not "은".
+// Picks the 은/는 topic particle based on whether a name's last syllable has
+// a batchim (final consonant) - e.g. 경기/대구/광주/제주 and most 시/구
+// district names (수원시, 강남구 ...) need "는", not "은".
 function topicParticle(name) {
   const code = name.charCodeAt(name.length - 1) - 0xac00;
   if (code < 0 || code > 11171) return '은';
@@ -108,6 +115,10 @@ function slug(region, grade, subject) {
   return `${region.name}-${grade.label}${subject.label}과외`;
 }
 
+function districtSlug(region, district, grade, subject) {
+  return `${region.name}-${district}-${grade.label}${subject.label}과외`;
+}
+
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
@@ -118,6 +129,22 @@ function relatedLinks(region, grade, subject) {
   const sameGradeOtherSubjects = SUBJECTS.filter(s => s.key !== subject.key)
     .map(s => `<a href="/courses/${encodeURIComponent(slug(region, grade, s))}.html">${region.name} ${grade.label}${s.label}과외</a>`).join('\n            ');
   return { sameSubjectOtherGrades, sameGradeOtherSubjects };
+}
+
+function districtLinksSection(region, grade, subject) {
+  const districts = REGION_DISTRICTS[region.name] || [];
+  if (districts.length === 0) return '';
+  const links = districts
+    .map(d => `<a href="/courses/${encodeURIComponent(districtSlug(region, d, grade, subject))}.html">${region.name} ${d} ${grade.label}${subject.label}과외</a>`)
+    .join('\n          ');
+  return `
+  <div class="course-section">
+    <h2>${esc(region.name)} 시/군/구별 ${esc(grade.label)}${esc(subject.label)}과외</h2>
+    <div class="related-grid" style="grid-template-columns:repeat(3,1fr);">
+          ${links}
+    </div>
+  </div>
+`;
 }
 
 function pageTemplate(region, grade, subject) {
@@ -226,7 +253,7 @@ function pageTemplate(region, grade, subject) {
     <div class="a">네, 여자 선생님·남자 선생님 모두 선택 가능하며, 신청 시 선호하시는 성별을 남겨주시면 우선 배정해드립니다. 수업 장소도 자택·카페·스터디카페·화상 중에서 원하시는 방식으로 진행할 수 있습니다.</div>
     <p><a href="/#faq" style="color:var(--gold); font-weight:600;">전체 FAQ 더 보기 →</a></p>
   </div>
-
+${districtLinksSection(region, grade, subject)}
   <div class="course-section">
     <h2>관련 페이지</h2>
     <div class="related-grid">
@@ -240,6 +267,164 @@ function pageTemplate(region, grade, subject) {
       </div>
     </div>
     <p style="margin-top:16px;"><a href="/courses/" style="color:var(--gold); font-weight:600;">전국 지역별 과외 전체 목록 →</a></p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-logo">성적오름</div>
+    <div class="foot-keywords">
+      <p><b>지역별 과외</b>서울 · 경기 · 인천 · 부산 · 대구 · 광주 · 대전 · 울산 · 세종 · 강원 · 충북 · 충남 · 전북 · 전남 · 경북 · 경남 · 제주</p>
+      <p><b>과목별 과외</b>국어 · 영어 · 수학 · 사회 · 과학 · 코딩 · 자기주도학습 코칭</p>
+      <p><b>학년별 과외</b>초1 · 초2 · 초3 · 초4 · 초5 · 초6 · 중1 · 중2 · 중3 · 고1 · 고2 · 고3 · 재수생 · N수생</p>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 성적오름. All rights reserved.</span>
+      <a href="/">홈으로</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
+`;
+}
+
+function districtRelatedLinks(region, district, grade, subject) {
+  const sameSubjectOtherGrades = GRADES.filter(g => g.key !== grade.key)
+    .map(g => `<a href="/courses/${encodeURIComponent(districtSlug(region, district, g, subject))}.html">${region.name} ${district} ${g.label}${subject.label}과외</a>`).join('\n            ');
+  const sameGradeOtherSubjects = SUBJECTS.filter(s => s.key !== subject.key)
+    .map(s => `<a href="/courses/${encodeURIComponent(districtSlug(region, district, grade, s))}.html">${region.name} ${district} ${grade.label}${s.label}과외</a>`).join('\n            ');
+  const siblingDistricts = (REGION_DISTRICTS[region.name] || [])
+    .filter(d => d !== district).slice(0, 6)
+    .map(d => `<a href="/courses/${encodeURIComponent(districtSlug(region, d, grade, subject))}.html">${region.name} ${d} ${grade.label}${subject.label}과외</a>`).join('\n            ');
+  return { sameSubjectOtherGrades, sameGradeOtherSubjects, siblingDistricts };
+}
+
+function districtPageTemplate(region, district, grade, subject) {
+  const c = CONTENT[grade.key][subject.key];
+  const title = `${region.name} ${district} ${grade.label}${subject.label}과외 | 성적오름 1:1 맞춤 과외`;
+  const desc = `${region.name} ${district} 지역 ${grade.label} 학생을 위한 ${subject.label}과외 안내. 초1부터 고3까지 12년 로드맵을 가진 성적오름이 ${district}에서도 동일한 커리큘럼으로 ${grade.label}${subject.label}과외를 제공합니다.`;
+  const canonical = `${SITE}/courses/${encodeURIComponent(districtSlug(region, district, grade, subject))}.html`;
+  const parentUrl = `/courses/${encodeURIComponent(slug(region, grade, subject))}.html`;
+  const { sameSubjectOtherGrades, sameGradeOtherSubjects, siblingDistricts } = districtRelatedLinks(region, district, grade, subject);
+
+  return `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#101a33">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(desc)}">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="keywords" content="${esc(`${district}${grade.label}${subject.label}과외, ${district}과외, ${region.name}${district}과외, ${region.name}${grade.label}${subject.label}과외, ${grade.label}${subject.label}과외`)}">
+<link rel="canonical" href="${canonical}">
+<link rel="stylesheet" href="/assets/course.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="성적오름">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(desc)}">
+<meta property="og:image" content="${SITE}/og-image.jpg">
+<meta property="og:url" content="${canonical}">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "홈", "item": "${SITE}/"},
+    {"@type": "ListItem", "position": 2, "name": "지역별 과외", "item": "${SITE}/courses/"},
+    {"@type": "ListItem", "position": 3, "name": "${esc(region.name)}", "item": "${SITE}${parentUrl}"},
+    {"@type": "ListItem", "position": 4, "name": "${esc(region.name)} ${esc(district)} ${esc(grade.label)}${esc(subject.label)}과외", "item": "${canonical}"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "${esc(`${region.name} ${district} ${grade.label}${subject.label}과외`)}",
+  "serviceType": "${esc(`${grade.label} ${subject.label} 과외`)}",
+  "provider": {"@type": "EducationalOrganization", "name": "성적오름", "url": "${SITE}/"},
+  "areaServed": {"@type": "AdministrativeArea", "name": "${esc(district)}", "containedInPlace": {"@type": "AdministrativeArea", "name": "${esc(region.name)}"}},
+  "url": "${canonical}"
+}
+</script>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <a class="logo" href="/"><span class="logo-mark">성</span>성적오름</a>
+    <a class="nav-cta" href="tel:010-3951-0535">상담 신청 010-3951-0535</a>
+  </div>
+</header>
+
+<div class="mobile-cta-bar">
+  <a class="mobile-cta-call" href="tel:010-3951-0535">☎ 전화</a>
+  <a class="mobile-cta-kakao" href="https://open.kakao.com/o/sOXeVnpi" target="_blank" rel="noopener">💬 카톡</a>
+  <a class="mobile-cta-apply" href="/#apply">진단 신청</a>
+</div>
+
+<div class="wrap">
+  <div class="breadcrumb">
+    <a href="/">홈</a><span class="sep">/</span>
+    <a href="/courses/">지역별 과외</a><span class="sep">/</span>
+    <a href="${parentUrl}">${esc(region.name)} ${esc(grade.label)}${esc(subject.label)}과외</a><span class="sep">/</span>
+    <span>${esc(district)}</span>
+  </div>
+
+  <div class="course-hero">
+    <div class="eyebrow">${esc(region.name)} ${esc(district)} · ${esc(grade.label)} · ${esc(subject.label)}</div>
+    <h1>${esc(region.name)} ${esc(district)} ${esc(grade.label)}${esc(subject.label)}과외</h1>
+    <p>초1부터 고3까지 12년 로드맵을 설계하는 1:1 전문 과외 성적오름이 ${esc(region.name)} ${esc(district)} ${esc(grade.label)} 학생을 위한 ${esc(subject.label)}과외를 안내합니다.</p>
+  </div>
+
+  <div class="course-section">
+    <h2>${esc(c.title)}</h2>
+    <p>${esc(c.body)}</p>
+    <ul class="tag-list">${c.tags.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+  </div>
+
+  <div class="course-section">
+    <h2>${esc(district)} 지역 수업 방식</h2>
+    <p>${esc(district)}${topicParticle(district)} ${esc(region.name)} 소속 지역으로, 성적오름은 <a href="${parentUrl}">${esc(region.name)} 전역</a>에 동일한 커리큘럼과 선생님 매칭 기준을 적용합니다. ${esc(regionNote(region))}</p>
+  </div>
+
+  <div class="cta-box">
+    <p>${esc(region.name)} ${esc(district)} ${esc(grade.label)}${esc(subject.label)}과외, 무료 학습 진단 상담으로 먼저 확인해보세요.</p>
+    <div class="btns">
+      <a class="btn-gold" href="/#apply">진단 신청</a>
+      <a class="btn-outline" href="tel:010-3951-0535">전화 상담</a>
+    </div>
+  </div>
+
+  <div class="course-section faq-mini">
+    <h2>자주 묻는 질문</h2>
+    <div class="q">지방에 살아도 신청할 수 있나요? 방문 과외도 가능한가요?</div>
+    <div class="a">네, 화상 과외는 전국 어디서나 동일하게 진행됩니다. 방문·대면 과외는 지역에 따라 배정 가능한 선생님이 달라, 상담 시 거주 지역을 말씀해주시면 방문 가능 여부와 카페·스터디카페 과외 등 대안을 함께 안내해드립니다.</div>
+    <div class="q">선생님 성별이나 수업 장소를 선택할 수 있나요?</div>
+    <div class="a">네, 여자 선생님·남자 선생님 모두 선택 가능하며, 신청 시 선호하시는 성별을 남겨주시면 우선 배정해드립니다. 수업 장소도 자택·카페·스터디카페·화상 중에서 원하시는 방식으로 진행할 수 있습니다.</div>
+    <p><a href="/#faq" style="color:var(--gold); font-weight:600;">전체 FAQ 더 보기 →</a></p>
+  </div>
+
+  <div class="course-section">
+    <h2>관련 페이지</h2>
+    <div class="related-grid">
+      <div class="related-group">
+        <h3>${esc(district)}의 다른 학년 ${esc(subject.label)}과외</h3>
+        ${sameSubjectOtherGrades}
+      </div>
+      <div class="related-group">
+        <h3>${esc(district)} ${esc(grade.label)}의 다른 과목</h3>
+        ${sameGradeOtherSubjects}
+      </div>
+      ${siblingDistricts ? `<div class="related-group">
+        <h3>${esc(region.name)}의 다른 지역</h3>
+        ${siblingDistricts}
+      </div>` : ''}
+    </div>
+    <p style="margin-top:16px;"><a href="${parentUrl}" style="color:var(--gold); font-weight:600;">${esc(region.name)} 전체 보기 →</a> · <a href="/courses/" style="color:var(--gold); font-weight:600;">전국 지역별 과외 전체 목록 →</a></p>
   </div>
 </div>
 
@@ -308,7 +493,7 @@ function hubTemplate() {
   <div class="course-hero">
     <div class="eyebrow">전국 서비스 지역</div>
     <h1>지역별 과외 전체 목록</h1>
-    <p>전국 17개 지역 × 초등·중등·고등 × 수학·영어·국어로 나눈 과외 안내 페이지입니다. 원하시는 지역과 학년, 과목을 찾아 들어가 보세요.</p>
+    <p>전국 17개 지역 × 초등·중등·고등 × 수학·영어·국어로 나눈 과외 안내 페이지입니다. 원하시는 지역과 학년, 과목을 찾아 들어가 보세요. 각 지역 페이지에서 시/군/구 단위 세부 페이지로도 이동할 수 있습니다.</p>
   </div>
   <div class="course-section">
 ${groups}
@@ -331,20 +516,48 @@ ${groups}
 
 fs.mkdirSync(COURSES_DIR, { recursive: true });
 
-let count = 0;
-const urls = [];
+let regionPageCount = 0;
+let districtPageCount = 0;
+const sitemapEntries = [];
+
 for (const region of REGIONS) {
   for (const grade of GRADES) {
     for (const subject of SUBJECTS) {
       const filename = `${slug(region, grade, subject)}.html`;
       fs.writeFileSync(path.join(COURSES_DIR, filename), pageTemplate(region, grade, subject), 'utf8');
-      urls.push(`${SITE}/courses/${encodeURIComponent(filename)}`);
-      count++;
+      sitemapEntries.push({ loc: `${SITE}/courses/${encodeURIComponent(filename)}`, priority: '0.5' });
+      regionPageCount++;
+    }
+  }
+  const districts = REGION_DISTRICTS[region.name] || [];
+  for (const district of districts) {
+    for (const grade of GRADES) {
+      for (const subject of SUBJECTS) {
+        const filename = `${districtSlug(region, district, grade, subject)}.html`;
+        fs.writeFileSync(path.join(COURSES_DIR, filename), districtPageTemplate(region, district, grade, subject), 'utf8');
+        sitemapEntries.push({ loc: `${SITE}/courses/${encodeURIComponent(filename)}`, priority: '0.4' });
+        districtPageCount++;
+      }
     }
   }
 }
 fs.writeFileSync(path.join(COURSES_DIR, 'index.html'), hubTemplate(), 'utf8');
+sitemapEntries.unshift({ loc: `${SITE}/courses/`, priority: '0.7' });
 
-fs.writeFileSync(path.join(__dirname, 'course-urls.json'), JSON.stringify(urls, null, 2), 'utf8');
+fs.writeFileSync(path.join(__dirname, 'course-urls.json'), JSON.stringify(sitemapEntries.map(e => e.loc), null, 2), 'utf8');
 
-console.log(`Generated ${count} course pages + 1 hub page.`);
+const today = new Date().toISOString().slice(0, 10);
+const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapEntries.map(e => `  <url>
+    <loc>${e.loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>${e.priority}</priority>
+  </url>`).join('\n')}
+</urlset>
+`;
+fs.writeFileSync(path.join(ROOT, 'sitemap-courses.xml'), sitemapXml, 'utf8');
+
+console.log(`Generated ${regionPageCount} region pages + ${districtPageCount} district pages + 1 hub page.`);
+console.log(`Wrote sitemap-courses.xml with ${sitemapEntries.length} URLs.`);
