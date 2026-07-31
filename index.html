@@ -398,9 +398,11 @@
   #teachers .section-head p{color:#b7bdcc;}
   .teacher-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;}
   .teacher-card{
-    background:var(--ink-2); border:1px solid var(--line-dark);
-    padding:34px 26px 30px; text-align:center;
+    display:block; background:var(--ink-2); border:1px solid var(--line-dark);
+    padding:34px 26px 30px; text-align:center; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
   }
+  .teacher-card:hover{border-color:var(--gold);}
   .teacher-avatar-ring{
     width:104px; height:104px; border-radius:50%; margin:0 auto 20px; position:relative;
     background:radial-gradient(circle at 35% 30%, #24345e, var(--ink) 75%);
@@ -775,7 +777,7 @@
       <p>모든 선생님은 담당 학교급의 교육과정을 별도로 이수합니다.</p>
     </div>
     <div class="teacher-grid">
-      <div class="teacher-card">
+      <a class="teacher-card" href="tel:010-3951-0535">
         <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">초</span>
@@ -786,8 +788,8 @@
           <p>초등 저학년 학습습관 형성과 국어·수학 기초 개념 지도 전문. 놀이형 학습으로 공부 거부감을 줄입니다.</p>
           <ul class="teacher-tags"><li>초1-초6</li><li>연산</li><li>독해력</li></ul>
         </div>
-      </div>
-      <div class="teacher-card">
+      </a>
+      <a class="teacher-card" href="tel:010-3951-0535">
         <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">중</span>
@@ -798,8 +800,8 @@
           <p>내신 등급 관리와 고교 선행의 균형을 맞추는 중등 전문 강사. 자유학기제 이후 성적 급변 구간을 집중 관리합니다.</p>
           <ul class="teacher-tags"><li>중1-중3</li><li>내신</li><li>수학 선행</li></ul>
         </div>
-      </div>
-      <div class="teacher-card">
+      </a>
+      <a class="teacher-card" href="tel:010-3951-0535">
         <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">고</span>
@@ -810,8 +812,8 @@
           <p>수능 기출 분석과 등급별 맞춤 문제풀이 전략을 지도하는 고등 전문 강사. 정시·수시 병행 전략도 함께 상담합니다.</p>
           <ul class="teacher-tags"><li>고1-고3</li><li>수능 대비</li><li>과탐</li></ul>
         </div>
-      </div>
-      <div class="teacher-card">
+      </a>
+      <a class="teacher-card" href="tel:010-3951-0535">
         <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">국</span>
@@ -822,8 +824,8 @@
           <p>지문 구조 분석과 문학 감상법을 함께 지도하는 국어 전문 강사. 비문학 독해 전략으로 등급을 끌어올립니다.</p>
           <ul class="teacher-tags"><li>독해력</li><li>문학</li><li>비문학</li></ul>
         </div>
-      </div>
-      <div class="teacher-card">
+      </a>
+      <a class="teacher-card" href="tel:010-3951-0535">
         <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">영</span>
@@ -834,8 +836,8 @@
           <p>문법 체계화와 실전 독해를 병행 지도하는 영어 전문 강사. 내신 서술형부터 수능 독해까지 폭넓게 다룹니다.</p>
           <ul class="teacher-tags"><li>문법</li><li>독해</li><li>서술형</li></ul>
         </div>
-      </div>
-      <div class="teacher-card">
+      </a>
+      <a class="teacher-card" href="tel:010-3951-0535">
         <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">수</span>
@@ -846,8 +848,8 @@
           <p>개념 이해부터 심화 문제풀이까지 단계별로 지도하는 수학 전문 강사. 오답노트 기반 반복 학습을 중요시합니다.</p>
           <ul class="teacher-tags"><li>개념</li><li>심화</li><li>오답노트</li></ul>
         </div>
-      </div>
-      <div class="teacher-card">
+      </a>
+      <a class="teacher-card" href="tel:010-3951-0535">
         <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">과</span>
@@ -858,8 +860,8 @@
           <p>물리·화학·생명과학 개념을 실험과 연결해 설명하는 과탐 전문 강사. 단원별 기출 분석으로 등급 전략을 세웁니다.</p>
           <ul class="teacher-tags"><li>물리</li><li>화학</li><li>생명과학</li></ul>
         </div>
-      </div>
-      <div class="teacher-card">
+      </a>
+      <a class="teacher-card" href="tel:010-3951-0535">
         <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">사</span>
@@ -870,8 +872,8 @@
           <p>흐름 중심의 한국사 학습과 개념 정리형 통합사회 지도가 전문인 사탐 강사. 암기가 아닌 이해 중심 수업을 진행합니다.</p>
           <ul class="teacher-tags"><li>한국사</li><li>통합사회</li><li>개념정리</li></ul>
         </div>
-      </div>
-      <div class="teacher-card">
+      </a>
+      <a class="teacher-card" href="tel:010-3951-0535">
         <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">코</span>
@@ -882,8 +884,8 @@
           <p>초등 스크래치부터 중·고등 파이썬·정보 교과까지 지도하는 코딩 전문 강사. 실습 중심으로 문제 해결력을 키웁니다.</p>
           <ul class="teacher-tags"><li>스크래치</li><li>파이썬</li><li>정보 교과</li></ul>
         </div>
-      </div>
-      <div class="teacher-card">
+      </a>
+      <a class="teacher-card" href="tel:010-3951-0535">
         <div class="teacher-avatar-ring">
           <svg class="avatar-icon" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="38" r="20" fill="currentColor"/><path d="M12 92c0-26 17-42 38-42s38 16 38 42" fill="currentColor"/></svg>
           <span class="teacher-badge">코</span>
@@ -894,7 +896,7 @@
           <p>공부 습관과 시간 관리부터 잡아주는 자기주도학습 코칭 전문 강사. 스스로 계획을 세우고 실행하는 힘을 길러줍니다.</p>
           <ul class="teacher-tags"><li>학습습관</li><li>시간관리</li><li>플래너 코칭</li></ul>
         </div>
-      </div>
+      </a>
     </div>
     <p style="margin-top:28px; text-align:center; font-size:13.5px; color:var(--slate);">
       모든 과목에서 여자 선생님·남자 선생님 모두 선택하실 수 있습니다. 상담 시 선호하시는 선생님을 말씀해주세요.
