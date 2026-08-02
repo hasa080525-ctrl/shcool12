@@ -1,11 +1,14 @@
 /*
  * Generates static landing pages under /courses/:
  *  - 1 hub page listing all 17 regions
- *  - 153 region pages (region x grade x subject)
- *  - ~2,061 district pages (region x district x grade x subject), one per
+ *  - 357 region pages (region x grade x subject; 7 grades: 초등,중1-3,고1-3)
+ *  - ~4,809 district pages (region x district x grade x subject), one per
  *    real 시/군/구, so region-level searches ("서울 고등수학과외") and
- *    district-level searches ("강남구 고등수학과외") both have a matching
- *    page. Also (re)writes sitemap-courses.xml with every URL from this run.
+ *    district-level searches ("강남구 고2수학과외") both have a matching
+ *    page. 읍/면/동 coverage is mentioned in-page rather than as separate
+ *    pages (no verified nationwide 읍/면/동 dataset; separate pages at that
+ *    granularity would also be too thin/duplicative for search quality).
+ *    Also (re)writes sitemap-courses.xml with every URL from this run.
  * Re-run this script (`node scripts/generate-courses.js`) whenever region/
  * grade/subject/district copy needs to change — do not hand-edit the
  * generated files directly.
@@ -28,8 +31,12 @@ const REGIONS = [
 
 const GRADES = [
   { key: 'elem', label: '초등' },
-  { key: 'mid', label: '중등' },
-  { key: 'high', label: '고등' },
+  { key: 'mid1', label: '중1' },
+  { key: 'mid2', label: '중2' },
+  { key: 'mid3', label: '중3' },
+  { key: 'high1', label: '고1' },
+  { key: 'high2', label: '고2' },
+  { key: 'high3', label: '고3' },
 ];
 
 const SUBJECTS = [
@@ -47,15 +54,35 @@ const CONTENT = {
     eng: { title: '초등영어, 파닉스와 듣기 습관 만들기', body: '초등 영어는 파닉스와 기본 어휘를 쌓아 이후 문법 학습의 기초 체력을 만드는 시기입니다. 듣기·말하기 노출을 충분히 확보하면서 읽기 독립을 목표로 지도합니다.', tags: ['파닉스', '기초 어휘', '듣기 습관'] },
     kor: { title: '초등국어, 어휘력과 독해 근육 키우기', body: '초등 국어는 어휘력과 독해력이 다른 모든 과목의 기초가 되는 시기입니다. 맞춤법과 문장 구성을 다지고, 다양한 지문을 읽으며 독해 근육을 키웁니다.', tags: ['어휘력', '독해력', '맞춤법'] },
   },
-  mid: {
-    math: { title: '중등수학, 함수·도형과 내신의 시작', body: '중등 수학은 함수·도형 등 추상적 개념이 본격적으로 늘어나며 내신 성적 체계가 시작되는 시기입니다. 개념과 유형을 연결해 내신 문제에 바로 적용할 수 있도록 지도합니다.', tags: ['함수·도형', '내신 대비', '유형 학습'] },
-    eng: { title: '중등영어, 문법 체계화와 독해 훈련', body: '중등 영어는 문법 체계를 세우고 독해 지문의 난이도가 올라가는 시기입니다. 문법 규칙을 실제 문장에 적용하는 훈련과 함께 내신 서술형까지 대비합니다.', tags: ['문법 체계화', '독해 훈련', '내신 서술형'] },
-    kor: { title: '중등국어, 문학·비문학 독해와 어휘 확장', body: '중등 국어는 문학·비문학 독해와 어휘 확장이 함께 이뤄지는 시기입니다. 지문을 구조적으로 읽는 훈련을 통해 내신과 수행평가에 모두 대응합니다.', tags: ['문학 독해', '비문학 독해', '어휘 확장'] },
+  mid1: {
+    math: { title: '중1수학, 자유학기제 기간 개념 다지기', body: '중1은 자유학기제로 지필시험 부담이 없는 학기가 있어, 정수·유리수·문자와 식 등 중등수학의 기초 개념을 여유 있게 다질 수 있는 시기입니다. 이 시기에 개념을 제대로 다져두면 중2 이후 내신에서 큰 힘이 됩니다.', tags: ['자유학기제 활용', '기초 개념', '연산 정확도'] },
+    eng: { title: '중1영어, 문법 체계의 첫걸음', body: '중1 영어는 초등 영어에서 중등 문법 체계로 넘어가는 전환기입니다. 문장의 형식과 기본 시제를 정리하며, 어휘량을 늘려 이후 서술형·독해 학습의 기초를 만듭니다.', tags: ['문법 기초', '시제 정리', '어휘 확장'] },
+    kor: { title: '중1국어, 문학 감상과 어휘력 확장', body: '중1 국어는 문학 작품을 감상하는 방법을 배우고 어휘력을 확장하는 시기입니다. 자유학기제 기간을 활용해 다양한 지문을 읽는 습관을 만들어둡니다.', tags: ['문학 감상', '어휘력', '독서 습관'] },
   },
-  high: {
-    math: { title: '고등수학, 내신과 수능을 함께', body: '고등 수학은 내신 등급과 수능 실력을 동시에 챙겨야 하는 시기입니다. 개념 정리부터 기출 유형 풀이까지, 등급대별 맞춤 전략으로 지도합니다.', tags: ['내신+수능', '기출 유형', '등급별 전략'] },
-    eng: { title: '고등영어, 수능형 독해와 어휘량 확장', body: '고등 영어는 수능형 독해와 어휘량이 급격히 늘어나는 시기입니다. 긴 지문을 빠르고 정확하게 읽는 훈련과 함께 듣기·어법까지 통합적으로 대비합니다.', tags: ['수능 독해', '어휘 확장', '듣기·어법'] },
-    kor: { title: '고등국어, 지문 분석력과 선택과목 전략', body: '고등 국어는 문학·독서(비문학) 지문 분석력과 화법과작문 등 선택과목 전략이 함께 필요한 시기입니다. 지문 유형별 접근법을 훈련해 실전 감각을 끌어올립니다.', tags: ['지문 분석', '선택과목 전략', '실전 감각'] },
+  mid2: {
+    math: { title: '중2수학, 함수의 시작과 첫 내신', body: '중2는 함수 개념이 처음 등장하고 본격적으로 내신 시험이 시작되는 시기입니다. 일차함수·연립방정식 등 이후 수학의 뼈대가 되는 단원을 개념과 유형 모두 잡아 지도합니다.', tags: ['함수 개념', '첫 내신 대비', '유형 학습'] },
+    eng: { title: '중2영어, 문법 심화와 서술형 대비', body: '중2 영어는 문법이 심화되고 내신 서술형 비중이 늘어나는 시기입니다. 문법 규칙을 실제 문장 쓰기에 적용하는 훈련으로 서술형 감점을 줄입니다.', tags: ['문법 심화', '서술형 대비', '문장 응용'] },
+    kor: { title: '중2국어, 비문학 독해력 집중', body: '중2 국어는 비문학 지문의 난이도가 올라가며 독해력이 성적을 가르는 시기입니다. 지문 구조를 파악하는 훈련을 반복해 내신·수행평가에 대응합니다.', tags: ['비문학 독해', '지문 구조 분석', '내신 대비'] },
+  },
+  mid3: {
+    math: { title: '중3수학, 고교수학 연계와 마무리', body: '중3은 인수분해·이차함수 등 고1 수학과 직결되는 단원을 마무리하는 시기입니다. 중등 과정을 정리하는 동시에 고교 수학 선행까지 자연스럽게 연결해 지도합니다.', tags: ['고교 연계', '이차함수', '중등 마무리'] },
+    eng: { title: '중3영어, 고교 대비 독해력 완성', body: '중3 영어는 고교 영어에 대비해 긴 지문을 읽어내는 독해력을 완성하는 시기입니다. 어법과 어휘를 정리하며 고1 내신·모의고사 대비 기초 체력을 만듭니다.', tags: ['독해력 완성', '고교 대비', '어법 정리'] },
+    kor: { title: '중3국어, 문법 총정리와 고교 대비', body: '중3 국어는 중등 문법을 총정리하고 고교 국어의 문학·독서 체계에 대비하는 시기입니다. 지문 유형별 접근법을 미리 익혀 고1 국어에 부드럽게 연결합니다.', tags: ['문법 총정리', '고교 대비', '독해 유형'] },
+  },
+  high1: {
+    math: { title: '고1수학, 첫 내신과 등급 관리의 시작', body: '고1은 상대평가 등급이 처음 매겨지는 시기입니다. 수학(상)·(하) 개념을 확실히 잡고 학교 시험 유형에 맞춰 등급 관리를 시작합니다.', tags: ['첫 내신', '등급 관리', '개념 완성'] },
+    eng: { title: '고1영어, 내신과 수능 기초 병행', body: '고1 영어는 내신 서술형과 수능형 독해를 함께 준비해야 하는 시기입니다. 학교 시험 대비와 수능 기초 어법·독해를 병행해 지도합니다.', tags: ['내신+수능 병행', '서술형 대비', '독해 기초'] },
+    kor: { title: '고1국어, 문학·독서 기초 다지기', body: '고1 국어는 고교 국어의 뼈대가 되는 문학·독서(비문학) 기초를 다지는 시기입니다. 지문 분석 습관을 처음부터 바르게 잡아둡니다.', tags: ['문학 기초', '독서 기초', '지문 분석'] },
+  },
+  high2: {
+    math: { title: '고2수학, 선택과목과 수능 기초', body: '고2는 확률과 통계·미적분 등 선택과목이 시작되고 수능 대비가 본격화되는 시기입니다. 내신 등급과 수능 기초를 함께 관리하도록 지도합니다.', tags: ['선택과목', '수능 기초', '내신 병행'] },
+    eng: { title: '고2영어, 수능형 독해로 전환', body: '고2 영어는 내신 중심에서 수능형 독해 중심으로 무게가 옮겨가는 시기입니다. 긴 지문을 빠르게 읽는 훈련과 어휘량 확장을 함께 진행합니다.', tags: ['수능형 독해', '어휘 확장', '지문 속도'] },
+    kor: { title: '고2국어, 선택과목 전략 세우기', body: '고2 국어는 화법과작문·언어와매체 등 선택과목을 정하고 전략을 세우는 시기입니다. 학생의 강점에 맞는 선택과목 방향을 함께 점검합니다.', tags: ['선택과목 전략', '언어와매체', '화법과작문'] },
+  },
+  high3: {
+    math: { title: '고3수학, 수능 실전과 약점 보완', body: '고3 수학은 그동안 쌓은 개념을 실전 문제 풀이 속도와 정확도로 연결하는 시기입니다. 기출·모의고사 분석으로 약점 단원을 집중 보완합니다.', tags: ['수능 실전', '약점 보완', '기출 분석'] },
+    eng: { title: '고3영어, 실전 모의고사 완성', body: '고3 영어는 실전 감각을 완성하는 마지막 시기입니다. 시간 배분 훈련과 고난도 유형(빈칸·순서·삽입) 집중 풀이로 마무리합니다.', tags: ['실전 감각', '시간 배분', '고난도 유형'] },
+    kor: { title: '고3국어, 실전 감각과 시간 관리', body: '고3 국어는 문학·독서·선택과목을 제한 시간 안에 정확히 풀어내는 실전 감각이 관건인 시기입니다. 모의고사 분석을 통해 시간 배분 전략을 다듬습니다.', tags: ['실전 감각', '시간 관리', '모의고사 분석'] },
   },
 };
 
@@ -389,6 +416,7 @@ function districtPageTemplate(region, district, grade, subject) {
   <div class="course-section">
     <h2>${esc(district)} 지역 수업 방식</h2>
     <p>${esc(district)}${topicParticle(district)} ${esc(region.name)} 소속 지역으로, 성적오름은 <a href="${parentUrl}">${esc(region.name)} 전역</a>에 동일한 커리큘럼과 선생님 매칭 기준을 적용합니다. ${esc(regionNote(region))}</p>
+    <p>${esc(district)} 관내 모든 읍·면·동에서 동일한 기준으로 수업이 진행되며, 화상 과외는 세부 지역과 관계없이 즉시 시작할 수 있습니다. 방문·대면 과외는 상담 시 정확한 주소를 말씀해주시면 배정 가능 여부를 안내해드립니다.</p>
   </div>
 
   <div class="cta-box">
@@ -468,7 +496,7 @@ function hubTemplate() {
 <meta name="theme-color" content="#101a33">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>지역별 과외 전체 목록 | 성적오름</title>
-<meta name="description" content="서울·경기·인천·부산 등 전국 17개 지역, 초등·중등·고등 학년별, 수학·영어·국어 과목별 과외 안내 페이지 모음입니다.">
+<meta name="description" content="서울·경기·인천·부산 등 전국 17개 지역 시/군/구, 초등·중1~중3·고1~고3 학년별, 수학·영어·국어 과목별 과외 안내 페이지 모음입니다.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="${SITE}/courses/">
 <link rel="stylesheet" href="/assets/course.css">
@@ -493,7 +521,7 @@ function hubTemplate() {
   <div class="course-hero">
     <div class="eyebrow">전국 서비스 지역</div>
     <h1>지역별 과외 전체 목록</h1>
-    <p>전국 17개 지역 × 초등·중등·고등 × 수학·영어·국어로 나눈 과외 안내 페이지입니다. 원하시는 지역과 학년, 과목을 찾아 들어가 보세요. 각 지역 페이지에서 시/군/구 단위 세부 페이지로도 이동할 수 있습니다.</p>
+    <p>전국 17개 지역 × 초등·중1·중2·중3·고1·고2·고3 × 수학·영어·국어로 나눈 과외 안내 페이지입니다. 원하시는 지역과 학년, 과목을 찾아 들어가 보세요. 각 지역 페이지에서 시/군/구 단위 세부 페이지로도 이동할 수 있습니다.</p>
   </div>
   <div class="course-section">
 ${groups}
