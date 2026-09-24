@@ -1753,6 +1753,11 @@ function submitApplyForm(){
 
   // window.open must fire synchronously from the click handler, or browsers
   // treat it as a blocked popup instead of a user-initiated action.
+  fetch('https://script.google.com/macros/s/AKfycbwOqTTLkqZ_frFyT6N0QcjYZT3jsG0puhq9wRmrQSPxhFgn0fXET3AoGVj4PiHMNHcg/exec', {
+    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({ site: '성적오름', name: name, phone: phone, grade: grade, subject: subject, message: '[수업방식: ' + format + ', 선생님선호: ' + teacherGender + '] ' + (message || '(없음)') })
+  }).catch(function(err){ console.error('구글시트 전송 실패:', err); });
+
   window.open('https://open.kakao.com/o/sOXeVnpi', '_blank', 'noopener');
 
   if(navigator.clipboard && navigator.clipboard.writeText){
