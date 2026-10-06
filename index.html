@@ -438,6 +438,14 @@
   .dday-stats{display:flex; justify-content:space-between; font-size:12.5px; color:#c4cadb;}
   .dday-stats b{display:block; font-size:18px; color:#fff; font-weight:700; margin-bottom:3px;}
 
+  /* ---------- Cross-promo banner ---------- */
+  .cross-promo{background:var(--paper-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:32px 0;}
+  .cross-promo-inner{display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;}
+  .cross-promo-text{flex:1; min-width:260px;}
+  .cross-promo-text .eyebrow-line{margin-bottom:8px;}
+  .cross-promo-text h3{font-size:18px; color:var(--ink); margin-bottom:6px;}
+  .cross-promo-text p{font-size:13.5px; color:var(--slate);}
+
   /* ---------- Section shared ---------- */
   section{padding:96px 0;}
   .section-head{max-width:640px; margin-bottom:56px;}
@@ -733,6 +741,8 @@
     .road-line, .road-line-fill{display:none;}
     .road-detail{grid-template-columns:1fr; padding:26px 22px;}
     .road-subjects{grid-template-columns:1fr;}
+    .cross-promo-inner{flex-direction:column; align-items:flex-start;}
+    .cross-promo-inner .btn-primary{width:100%; text-align:center;}
   }
 
   @media (max-width:480px){
@@ -786,6 +796,7 @@
     <a href="/reviews.html">합격 후기</a>
     <a href="/news.html">뉴스</a>
     <a href="/faq.html">FAQ</a>
+    <a href="https://englisheasy.co.kr/" target="_blank" rel="noopener">영어과외</a>
   </nav>
 </header>
 
@@ -818,6 +829,17 @@
         <div><b>12년</b>초중고 통합 지도</div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="cross-promo">
+  <div class="wrap cross-promo-inner">
+    <div class="cross-promo-text">
+      <div class="eyebrow-line"><span class="bar"></span><span>함께 보면 좋은 서비스</span></div>
+      <h3>잉글리시이지 — 초중고 영어 전문 과외</h3>
+      <p>국어·수학 중심의 통합 로드맵과 함께, 영어 내신·수능 전문 관리가 필요하다면 잉글리시이지를 확인해보세요.</p>
+    </div>
+    <a class="btn-primary" href="https://englisheasy.co.kr/" target="_blank" rel="noopener">englisheasy.co.kr →</a>
   </div>
 </section>
 
@@ -1457,6 +1479,7 @@
         <a href="/reviews.html">합격 후기</a>
         <a href="/courses/">지역별 과외 전체 목록</a>
         <a href="/camp.html">2027 겨울캠프</a>
+        <a href="https://englisheasy.co.kr/" target="_blank" rel="noopener">영어과외 (잉글리시이지)</a>
       </div>
       <div class="foot-col">
         <h4>상담 안내</h4>
