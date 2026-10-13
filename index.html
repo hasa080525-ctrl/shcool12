@@ -1940,6 +1940,10 @@ function openHelpModal(){
   backToHelpStep1();
 }
 
+if(document.getElementById('helpModalOverlay')){
+  openHelpModal();
+}
+
 function closeHelpModal(){
   const overlay = document.getElementById('helpModalOverlay');
   if(overlay) overlay.classList.remove('open');
