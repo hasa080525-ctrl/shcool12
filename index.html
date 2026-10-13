@@ -1500,7 +1500,7 @@
       </div>
       <div class="field"><label>남기실 말씀 (선택)</label><input type="text" id="fMessage" placeholder="현재 고민이나 목표를 적어주세요"></div>
       <button class="form-submit" type="button" onclick="submitApplyForm()">상담 신청하기</button>
-      <div class="form-note">신청하기를 누르면 신청 내용이 자동으로 복사되고 카카오톡 오픈채팅이 열립니다. 채팅창에 붙여넣기(꾹 눌러서 붙여넣기) 하시면 접수가 완료됩니다.</div>
+      <div class="form-note">신청하기를 누르면 신청 내용이 자동으로 복사됩니다. 카카오톡 오픈채팅에 붙여넣기(꾹 눌러서 붙여넣기) 하시면 접수가 완료됩니다.</div>
     </div>
   </div>
 </section>
@@ -1912,18 +1912,14 @@ function submitApplyForm(){
     '선생님 선호: ' + teacherGender + '\n' +
     '남기신 말씀: ' + (message || '(없음)');
 
-  // window.open must fire synchronously from the click handler, or browsers
-  // treat it as a blocked popup instead of a user-initiated action.
   fetch('https://script.google.com/macros/s/AKfycbwOqTTLkqZ_frFyT6N0QcjYZT3jsG0puhq9wRmrQSPxhFgn0fXET3AoGVj4PiHMNHcg/exec', {
     method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify({ site: '성적오름', name: name, phone: phone, grade: grade, subject: subject, message: '[수업방식: ' + format + ', 선생님선호: ' + teacherGender + '] ' + (message || '(없음)') })
   }).catch(function(err){ console.error('구글시트 전송 실패:', err); });
 
-  window.open('https://open.kakao.com/o/sOXeVnpi', '_blank', 'noopener');
-
   if(navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(summary).then(function(){
-      alert('신청 내용이 복사되었습니다.\n곧 열리는(또는 열린) 카카오톡 채팅창에 붙여넣기(꾹 눌러서 붙여넣기) 해주세요!');
+      alert('신청 내용이 복사되었습니다.\n카카오톡 오픈채팅에 붙여넣기(꾹 눌러서 붙여넣기) 해주세요!');
     }).catch(function(){
       alert('아래 오픈채팅에서 다음 내용으로 상담 신청해주세요:\n\n' + summary);
     });
@@ -2003,8 +1999,6 @@ function submitHelpForm(){
     method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify({ site: '성적오름', name: name.value.trim(), phone: phone.value.trim(), grade: helpSelectedGrade, subject: helpSelectedSubject, message: messageVal })
   }).catch(function(err){ console.error('구글시트 전송 실패:', err); });
-
-  window.open('https://open.kakao.com/o/sOXeVnpi', '_blank', 'noopener');
 
   const step2 = document.getElementById('helpStep2');
   const step3 = document.getElementById('helpStep3');
