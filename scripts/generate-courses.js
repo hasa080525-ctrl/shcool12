@@ -256,6 +256,24 @@ function pageTemplate(region, grade, subject) {
   "url": "${canonical}"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "지방에 살아도 신청할 수 있나요? 방문 과외도 가능한가요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "네, 화상 과외는 전국 어디서나 동일하게 진행됩니다. 방문·대면 과외는 지역에 따라 배정 가능한 선생님이 달라, 상담 시 거주 지역을 말씀해주시면 방문 가능 여부와 카페·스터디카페 과외 등 대안을 함께 안내해드립니다."}
+    },
+    {
+      "@type": "Question",
+      "name": "선생님 성별이나 수업 장소를 선택할 수 있나요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "네, 여자 선생님·남자 선생님 모두 선택 가능하며, 신청 시 선호하시는 성별을 남겨주시면 우선 배정해드립니다. 수업 장소도 자택·카페·스터디카페·화상 중에서 원하시는 방식으로 진행할 수 있습니다."}
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>
@@ -408,6 +426,24 @@ function districtPageTemplate(region, district, grade, subject) {
   "provider": {"@type": "EducationalOrganization", "name": "성적오름", "url": "${SITE}/"},
   "areaServed": {"@type": "AdministrativeArea", "name": "${esc(district)}", "containedInPlace": {"@type": "AdministrativeArea", "name": "${esc(region.name)}"}},
   "url": "${canonical}"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "지방에 살아도 신청할 수 있나요? 방문 과외도 가능한가요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "네, 화상 과외는 전국 어디서나 동일하게 진행됩니다. 방문·대면 과외는 지역에 따라 배정 가능한 선생님이 달라, 상담 시 거주 지역을 말씀해주시면 방문 가능 여부와 카페·스터디카페 과외 등 대안을 함께 안내해드립니다."}
+    },
+    {
+      "@type": "Question",
+      "name": "선생님 성별이나 수업 장소를 선택할 수 있나요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "네, 여자 선생님·남자 선생님 모두 선택 가능하며, 신청 시 선호하시는 성별을 남겨주시면 우선 배정해드립니다. 수업 장소도 자택·카페·스터디카페·화상 중에서 원하시는 방식으로 진행할 수 있습니다."}
+    }
+  ]
 }
 </script>
 </head>
@@ -566,6 +602,19 @@ function formatPageTemplate(region, format) {
   "url": "${canonical}"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "선생님 성별이나 수업 장소를 선택할 수 있나요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "네, 여자 선생님·남자 선생님 모두 선택 가능하며, 신청 시 선호하시는 성별을 남겨주시면 우선 배정해드립니다. 수업 장소도 자택·카페·스터디카페·화상 중에서 원하시는 방식으로 진행할 수 있습니다."}
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>
@@ -718,6 +767,19 @@ function formatDistrictPageTemplate(region, district, format) {
   "url": "${canonical}"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "선생님 성별이나 수업 장소를 선택할 수 있나요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "네, 여자 선생님·남자 선생님 모두 선택 가능하며, 신청 시 선호하시는 성별을 남겨주시면 우선 배정해드립니다. 수업 장소도 자택·카페·스터디카페·화상 중에서 원하시는 방식으로 진행할 수 있습니다."}
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header>
@@ -839,6 +901,16 @@ function hubTemplate() {
 <link rel="canonical" href="${SITE}/courses/">
 <link rel="stylesheet" href="/assets/course.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "홈", "item": "${SITE}/"},
+    {"@type": "ListItem", "position": 2, "name": "지역별 과외", "item": "${SITE}/courses/"}
+  ]
+}
+</script>
 </head>
 <body>
 <header>
