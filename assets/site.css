@@ -411,7 +411,7 @@
 
   /* ---------- Footer ---------- */
   footer{background:var(--ink); color:#9aa1b5; padding:56px 0 28px;}
-  .foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px;}
+  .foot-grid{display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr 1fr; gap:32px; margin-bottom:40px;}
   .foot-logo{font-family:'Noto Serif KR', serif; font-size:19px; font-weight:700; color:#fff; margin-bottom:14px;}
   .foot-grid p{font-size:13px; line-height:1.8;}
   .foot-col h4{font-size:13px; color:#fff; margin-bottom:16px; font-weight:600;}
